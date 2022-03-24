@@ -1,0 +1,66 @@
+.friends {
+    flex-basis: 260px;
+    padding: 35px 25px 0;
+    padding-left: 25px;
+    padding-right: 25px;
+    background: linear-gradient(#1e1e20, #25272A);
+    color: $gray-text;
+
+    @include mobile-xs {
+        width: 100%;
+        flex-basis: 100%;
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    &__title {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 14px;
+    }
+
+    &__count {
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 14px;
+    }
+
+    &__list {
+        &-item {
+            list-style-type: none;
+            position: relative;
+
+            &_online:before, &_offline:before {
+                content: '';
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                position: absolute;
+                top: 50%;
+                left: -15px;
+                transform: translateY(-50%);
+            }
+
+            &_online::before {
+                background: $online-color;
+            }
+
+            &_offline::before {
+                background: $offline-color;
+            }
+
+            &:first-child {
+                margin-top: 20px;
+            }
+
+            & + & {
+                margin-top: 10px;
+            }
+        }
+    }
+}

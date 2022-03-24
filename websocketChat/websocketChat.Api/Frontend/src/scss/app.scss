@@ -1,0 +1,52 @@
+@import './reset.scss';
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Lato', sans-serif;
+    box-sizing: border-box;
+}
+
+.clip {
+    width: 14px;
+    height: 22px;
+    cursor: pointer;
+}
+
+.microphone {
+    width: 16px;
+    height: 22px;
+    margin-left: 19px;
+    cursor: pointer;
+}
+
+.reference {
+    text-decoration: none;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 18px;
+    color: #3577EF;
+}
+
+@import './variables';
+@import './mixins';
+@import './blocks/container';
+@import './blocks/friends';
+@import './blocks/avatar';
+@import './blocks/dialog';
+@import './blocks/input';
+@import './blocks/delimiter';
+@import './blocks/comment';
+@import './blocks/message-list';
+@import './blocks/message-content';
+@import './blocks/current-friend';
+@import './blocks/social';
+@import './blocks/contacts';
+@import './blocks/auth';
+@import './blocks/tabs';

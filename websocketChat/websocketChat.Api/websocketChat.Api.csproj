@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <FrontendSrcDirectory>$(MSBuildThisFileDirectory)\Frontend\</FrontendSrcDirectory>
+        <FrontendBuildDirectory>$(MSBuildThisFileDirectory)\Static</FrontendBuildDirectory>
+    </PropertyGroup>
+
+    <Target Name="NpmInstall" BeforeTargets="BeforeBuild">
+        <Exec Command="npm i" WorkingDirectory="$(FrontendSrcDirectory)" />
+    </Target>
+    <Target Name="BuildFrontBundle" DependsOnTargets="NpmInstall" BeforeTargets="BeforeBuild">
+        <Exec Command="npm run build" WorkingDirectory="$(FrontendSrcDirectory)" />
+    </Target>
+    <Target Name="AddPermissionsToStaticFolder" BeforeTargets="BeforeBuild">
+        <Exec Command="chmod -R 777 $(FrontendBuildDirectory)" />
+    </Target>
+
+    <ItemGroup>
+      <Content Include="Frontend\src\img\.DS_Store" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Frontend\src\img\png" />
+      <Folder Include="Static" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\webSocketChat.Services.StaticService\webSocketChat.Services.StaticService.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Static\assets.json" />
+    </ItemGroup>
+
+</Project>
