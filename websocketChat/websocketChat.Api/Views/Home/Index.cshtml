@@ -1,6 +1,4 @@
-@model websocketChat.Api.ViewModels.HomeViewModel
-
-@{
+﻿@{
     Layout = null;
 }
 
@@ -10,7 +8,6 @@
         <meta charset="utf-8" />
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <title>Чат</title>
-        <link rel="stylesheet" href="~/dist/@Model.CssFileName">
     </head>
     <body>
         <div id="chat-app">
@@ -19,7 +16,7 @@
         <script>
            // Config add
         </script>
-        <script src="~/dist/@Model.JsFileName"></script>
+        <script src="~/widget.js"></script>
     </body>
 </html>
 @{/*<p>Test webSocket connection</p>

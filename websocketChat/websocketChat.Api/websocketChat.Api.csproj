@@ -12,9 +12,6 @@
     <Target Name="BuildFrontBundle" DependsOnTargets="NpmInstall" BeforeTargets="BeforeBuild">
         <Exec Command="npm run build" WorkingDirectory="$(FrontendSrcDirectory)" />
     </Target>
-    <Target Name="AddPermissionsToStaticFolder" BeforeTargets="BeforeBuild">
-        <Exec Command="chmod -R 777 $(FrontendBuildDirectory)" />
-    </Target>
 
     <ItemGroup>
       <Content Include="Frontend\src\img\.DS_Store" />
@@ -22,11 +19,8 @@
 
     <ItemGroup>
       <Folder Include="Frontend\src\img\png" />
+      <Folder Include="Frontend\src\views\" />
       <Folder Include="Static" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\webSocketChat.Services.StaticService\webSocketChat.Services.StaticService.csproj" />
     </ItemGroup>
 
     <ItemGroup>
