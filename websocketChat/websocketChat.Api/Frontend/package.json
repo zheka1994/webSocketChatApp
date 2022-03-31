@@ -4,9 +4,8 @@
   "description": "frontend for websocket chat app",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rimraf ../Static/ && webpack --hot",
-    "wds": "rimraf ../Static/ && webpack serve"
+    "build": "rimraf dist && webpack",
+    "wds": "rimraf dist && webpack serve"
   },
   "author": "eugen guziy",
   "license": "ISC",
@@ -16,9 +15,7 @@
     "@babel/preset-react": "^7.16.5",
     "assets-webpack-plugin": "^7.1.1",
     "babel-loader": "^8.2.3",
-    "copy-webpack-plugin": "^10.2.0",
     "css-loader": "^6.5.1",
-    "handlebars-webpack-plugin": "^2.2.1",
     "mini-css-extract-plugin": "^2.4.5",
     "rimraf": "^3.0.2",
     "sass": "^1.45.0",
@@ -28,6 +25,7 @@
     "webpack-dev-server": "^4.7.1"
   },
   "dependencies": {
+    "handlebars": "^4.7.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router": "^6.2.1",

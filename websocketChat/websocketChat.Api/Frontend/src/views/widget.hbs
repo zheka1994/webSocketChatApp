@@ -12,7 +12,8 @@
         var link = document.createElement("link");
         link.rel = "stylesheet";
         link.type = "text/css";
-        link.href = "http://website.com/css/stylesheet.css";
+        link.href = href;
+        head.append(link);
     }
 
     loadCss("{{app.css}}");

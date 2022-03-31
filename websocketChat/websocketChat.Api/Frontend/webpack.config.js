@@ -1,10 +1,13 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const AssetsWebpackPlugin = require('assets-webpack-plugin');
 const path = require('path');
-const HandlebarsPlugin = require('handlebars-webpack-plugin');
+const HandlebarsWebpackPlugin = require('./plugins/handlebarsPlugin');
+const CopyPlugin = require('./plugins/copyPlugin');
 
-const outputPath = path.join(__dirname, '../Static');
+const outputPath = path.join(__dirname, 'dist');
 const config = require('./configurations/config.json');
+
+let appAssets;
 
 const buildConfig = {
     context: path.join(__dirname, 'src'),
@@ -57,7 +60,7 @@ const buildConfig = {
     },
     devServer: {
         static: {
-            directory: path.resolve(__dirname, '../Static')
+            directory: outputPath
         },
         historyApiFallback: true,
         compress: true,
@@ -72,12 +75,20 @@ const buildConfig = {
             filename: 'assets.json',
             fileTypes: ['js', 'css'],
             includeAllFileTypes: false,
-            removeFullPathAutoPrefix: true
+            removeFullPathAutoPrefix: true,
+            processOutput: function (assets) {
+                appAssets = assets;
+                return JSON.stringify(assets)
+            }
         }),
-        new HandlebarsPlugin({
-            entry: path.join(__dirname, 'src', 'views', 'widget.hbs'),
-            output: path.join(outputPath, 'widget.js'),
-            data: path.join(__dirname, 'assets.json')
+        new HandlebarsWebpackPlugin({
+            templateFileName: path.join(__dirname, 'src', 'views', 'widget.hbs'),
+            outputFileName: path.join(outputPath, 'widget.js'),
+            getTemplateModel: () => appAssets
+        }),
+        new CopyPlugin({
+            inputDirectory: outputPath,
+            outputDirectory: path.join(__dirname, '../Static')
         })
     ],
     devtool: 'source-map'
