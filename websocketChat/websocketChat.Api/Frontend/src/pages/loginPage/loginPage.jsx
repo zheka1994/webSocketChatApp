@@ -1,8 +1,15 @@
-import React from "react";
-import {useNavigate} from "react-router";
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
+
+import * as loginPageActions from './loginPageActions';
+
+import TabsItem from './components/tabsItem';
 
 export default function LoginPage(props) {
     const navigate = useNavigate();
+    const login = useSelector(store => store.login);
+    const dispatch = useDispatch();
     
     function onButtonClick() {
         console.log("Go to chat page");
@@ -18,27 +25,44 @@ export default function LoginPage(props) {
                         Чат
                     </div>
                     <div className="tabs">
-                        <div className="tabs__item tabs__item_active">
+                        <TabsItem active>
                             Вход
-                        </div>
-                        <div className="tabs__item">
+                        </TabsItem>
+                        <TabsItem>
                             Регистрация
-                        </div>
+                        </TabsItem>
                     </div>
                     <div className="auth__form-body auth__form-body_active">
                         <div className="auth__label">
                             Введите имя, фамилию (по желанию) и номер телефона
                         </div>
                         <div className="input">
-                            <input className="input__control input__control_full-width" type="text" placeholder="Имя"/>
+                            <input
+                                className="input__control input__control_full-width"
+                                type="text"
+                                placeholder="Имя"
+                                value={login?.name ?? ""}
+                                onChange={(e) => dispatch(loginPageActions.changeName(e.target.value))} />
                         </div>
                         <div className="input">
-                            <input className="input__control input__control_full-width" type="text" placeholder="Фамилия"/>
+                            <input
+                                className="input__control input__control_full-width"
+                                type="text"
+                                placeholder="Фамилия"
+                                value={login?.lastName ?? ""}
+                                onChange={(e) => dispatch(loginPageActions.changeLastName(e.target.value))} />
                         </div>
                         <div className="input">
-                            <input className="input__control input__control_full-width" type="text" placeholder="Телефон"/>
+                            <input
+                                className="input__control input__control_full-width"
+                                type="text"
+                                placeholder="Телефон"
+                                value={login?.phoneNumber ?? ""}
+                                onChange={(e) => dispatch(loginPageActions.changephoneNumber(e.target.value))} />
                         </div>
-                        <button type="button" className="auth__button">Далее</button>
+                        <button type="button" className="auth__button">
+                            Далее
+                        </button>
                     </div>
                     <div className="auth__form-body">
                         <div className="auth__label">

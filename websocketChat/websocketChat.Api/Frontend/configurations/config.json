@@ -1,5 +1,6 @@
 {
   "build": {
-    "publicPath": "/"
+    "publicPath": "/",
+    "testFrontendByWds": true
   }
 }

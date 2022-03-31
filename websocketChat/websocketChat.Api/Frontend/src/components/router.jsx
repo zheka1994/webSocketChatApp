@@ -2,8 +2,6 @@ import React from "react";
 import routes from "../pages/appRoutes";
 import {BrowserRouter, Route} from "react-router-dom";
 import {Routes} from "react-router";
-import LoginPage from "../pages/loginPage/loginPage";
-import ChatPage from "../pages/chatPage/chatPage";
 
 export default function Router() {
     function renderRoutes() {

@@ -12,9 +12,10 @@
         var link = document.createElement("link");
         link.rel = "stylesheet";
         link.type = "text/css";
-        link.href = "http://website.com/css/stylesheet.css";
+        link.href = href;
+        head.append(link);
     }
 
-    loadCss("");
-    loadJavaScript("");
+    loadCss("/app5e2337c73283f9259974.css");
+    loadJavaScript("/app47e26999d0afd7c2755f.js");
 })();

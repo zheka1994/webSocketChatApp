@@ -94,4 +94,12 @@ const buildConfig = {
     devtool: 'source-map'
 };
 
+if (config.build.testFrontendByWds) {
+    buildConfig.plugins.push(new HandlebarsWebpackPlugin({
+        templateFileName: path.join(__dirname, 'src', 'views', 'widget-test.hbs'),
+        outputFileName: path.join(outputPath, 'index.html'),
+        getTemplateModel: () => appAssets
+    }))
+}
+
 module.exports = buildConfig;
