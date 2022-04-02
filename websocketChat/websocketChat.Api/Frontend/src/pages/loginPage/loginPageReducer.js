@@ -20,6 +20,18 @@ export default function login(state = {}, action) {
                 phoneNumber: action.data
             };
         }
+        case loginPageActionTypes.SET_REGISTER_RESPONSE: {
+            return {
+                ...state,
+                authResult: action.data
+            }
+        }
+        case loginPageActionTypes.SET_AUTH_RESPONSE: {
+            return {
+                ...state,
+                registerResult: action.data
+            }
+        }
         default:
             return state;
 

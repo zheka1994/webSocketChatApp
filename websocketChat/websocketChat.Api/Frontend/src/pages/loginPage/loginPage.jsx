@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router';
 
 import * as loginPageActions from './loginPageActions';
 
 import TabsItem from './components/tabsItem';
+import FormBody from "./components/formBody";
 
 export default function LoginPage(props) {
-    const navigate = useNavigate();
     const login = useSelector(store => store.login);
     const dispatch = useDispatch();
+    const [activeTabNumber, setActiveTab]  = useState(1)
+    console.log(login);
     
-    function onButtonClick() {
-        console.log("Go to chat page");
-        navigate("/chat");
+    function onRegisterButtonClick() {
+        dispatch(loginPageActions.registerUser());
+    }
+    
+    function onAuthButtonClick() {
+        dispatch(loginPageActions.authUser());
     }
     
     return (
@@ -25,14 +29,18 @@ export default function LoginPage(props) {
                         Чат
                     </div>
                     <div className="tabs">
-                        <TabsItem active>
+                        <TabsItem
+                            active={activeTabNumber === 1}
+                            onClick={() => setActiveTab(1)}>
                             Вход
                         </TabsItem>
-                        <TabsItem>
+                        <TabsItem
+                            active={activeTabNumber === 2}
+                            onClick={() => setActiveTab(2)}>
                             Регистрация
                         </TabsItem>
                     </div>
-                    <div className="auth__form-body auth__form-body_active">
+                    <FormBody active={activeTabNumber === 1}>
                         <div className="auth__label">
                             Введите имя, фамилию (по желанию) и номер телефона
                         </div>
@@ -58,23 +66,23 @@ export default function LoginPage(props) {
                                 type="text"
                                 placeholder="Телефон"
                                 value={login?.phoneNumber ?? ""}
-                                onChange={(e) => dispatch(loginPageActions.changephoneNumber(e.target.value))} />
+                                onChange={(e) => dispatch(loginPageActions.changePhoneNumber(e.target.value))} />
                         </div>
-                        <button type="button" className="auth__button">
+                        <button type="button" className="auth__button" onClick={onRegisterButtonClick}>
                             Далее
                         </button>
-                    </div>
-                    <div className="auth__form-body">
+                    </FormBody>
+                    <FormBody active={activeTabNumber === 2}>
                         <div className="auth__label">
                             Введите номер телефона
                         </div>
                         <div className="input">
                             <input className="input__control input__control_full-width" type="text" placeholder="Телефон"/>
                         </div>
-                        <button type="button" className="auth__button" onClick={onButtonClick}>
+                        <button type="button" className="auth__button" onClick={onAuthButtonClick}>
                             Далее
                         </button>
-                    </div>
+                    </FormBody>
                 </div>
             </main>
         </>

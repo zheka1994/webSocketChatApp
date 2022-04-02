@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 export default function TabsItem(props) {
-    const {active, children} = props;
+    const {active, onClick, children} = props;
 
     const classes = classNames({
         'tabs__item': true,
@@ -10,7 +10,7 @@ export default function TabsItem(props) {
     });
 
     return (
-        <div className={classes}>
+        <div className={classes} onClick={onClick}>
             {children}
         </div>
     );
