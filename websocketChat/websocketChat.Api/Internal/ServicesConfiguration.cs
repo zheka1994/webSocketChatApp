@@ -1,4 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
+using websocketChat.Data;
+using websocketChat.UserService;
 
 namespace websocketChat.Api.Internal
 {
@@ -6,7 +8,8 @@ namespace websocketChat.Api.Internal
     {
         public static void AddAppServices(this IServiceCollection services)
         {
-            
+            services.AddTransient<IRepository, ChatDbContext>();
+            services.AddScoped<IUserService, UserService.UserService>();
         }
     }
 }

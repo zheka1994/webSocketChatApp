@@ -5,6 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using websocketChat.Api.Filters;
+using websocketChat.Api.Internal;
+using websocketChat.Core.Models;
 using websocketChat.Data;
 
 namespace websocketChat.Api
@@ -15,10 +18,10 @@ namespace websocketChat.Api
 
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
-            string env = environment.EnvironmentName;
-            string fileName = string.IsNullOrEmpty(env)
+            string envName = environment.EnvironmentName;
+            string fileName = string.IsNullOrEmpty(envName)
                 ? "appsettings.json"
-                : $"appsettings.{env}.json";
+                : $"appsettings.{envName}.json";
             var builder = new ConfigurationBuilder()
                 .AddJsonFile(fileName);
             _configuration = builder.Build();
@@ -33,13 +36,21 @@ namespace websocketChat.Api
                 ?.GetSection("ConnectionStrings")
                 ?.GetSection("Db")
                 ?.Value ?? "";
+            services.AddOptions();
+            services.Configure<UserServiceOptions>(_configuration
+                .GetSection("AppSettings")
+                ?.GetSection("UserServiceOptions"));
             services.AddDbContext<ChatDbContext>(options => options
                 .UseNpgsql(dbConnectionString)
                 .UseSnakeCaseNamingConvention()
                 .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
                 .EnableSensitiveDataLogging());
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(new ExceptionFilter());
+            });
+            services.AddAppServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

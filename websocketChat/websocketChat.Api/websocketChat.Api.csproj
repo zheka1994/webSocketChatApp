@@ -41,6 +41,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\websocketChat.Data\websocketChat.Data.csproj" />
+      <ProjectReference Include="..\websocketChat.UserService\websocketChat.UserService.csproj" />
     </ItemGroup>
 
 </Project>
