@@ -1,10 +1,11 @@
 using System.Net;
+using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using websocketChat.Core.Exceptions;
 
-namespace websocketChat.Api.Filters
+namespace websocketChat.Api.Internal.Filters
 {
     public class ExceptionFilter : IExceptionFilter
     {
@@ -22,7 +23,7 @@ namespace websocketChat.Api.Filters
                         exBase.Message, exBase.Code
                     })
                 };
-                context.HttpContext.Response.ContentType = "application/json";
+                context.HttpContext.Response.ContentType = MediaTypeNames.Application.Json;
                 context.HttpContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
             }
         }

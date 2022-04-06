@@ -1,12 +1,15 @@
+using System.Net.Mime;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using websocketChat.Api.Filters;
 using websocketChat.Api.Internal;
+using websocketChat.Api.Internal.Filters;
+using websocketChat.Api.Internal.Validation;
 using websocketChat.Core.Models;
 using websocketChat.Data;
 
@@ -49,6 +52,14 @@ namespace websocketChat.Api
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(new ExceptionFilter());
+            }).ConfigureApiBehaviorOptions(options =>
+            {
+                options.InvalidModelStateResponseFactory = context =>
+                {
+                    var result = new ValidationFailedResult(context.ModelState);
+                    result.ContentTypes.Add(MediaTypeNames.Application.Json); 
+                    return result;
+                };
             });
             services.AddAppServices();
         }
