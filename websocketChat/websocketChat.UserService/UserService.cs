@@ -29,7 +29,25 @@ namespace websocketChat.UserService
 
         public async Task<AuthResponse> Authorize(AuthRequest request)
         {
-            throw new NotImplementedException();
+            var user = await _repository.Users.SingleOrDefaultAsync(u => u.Name == request.Name);
+            if (user == null)
+            {
+                throw new UserServiceException("Пользователя с таким именем не существует. Пройдите регистрацию.");
+            }
+            
+            if (!IsPasswordCorrect(user, request.Password))
+            {
+                throw new UnauthorizedAccessException("Неверный пароль пользователя");
+            }
+
+            var token = GenerateToken(user);
+            
+            return new AuthResponse
+            {
+                Token = token,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber
+            };
         }
 
         public async Task<RegisterResponse> Register(RegisterRequest request)
@@ -37,7 +55,7 @@ namespace websocketChat.UserService
             var isUserAlreadyExists = await IsUserAlreadyExists(request);
             if (isUserAlreadyExists)
             {
-                throw new UserServiceException("User already exists");
+                throw new UserServiceException("Пользователь с таким именем уже существует");
             }
 
             var salt = CryptoExtensions.GenerateSalt(SaltLength);
@@ -85,6 +103,12 @@ namespace websocketChat.UserService
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        private bool IsPasswordCorrect(User user, string password)
+        {
+            var currentHash = CryptoExtensions.CreateHash(password, user.PwdSalt);
+            return currentHash == user.PwdHash;
         }
     }
 }

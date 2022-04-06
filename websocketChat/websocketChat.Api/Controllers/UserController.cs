@@ -22,5 +22,12 @@ namespace websocketChat.Api.Controllers
             var result = await _userService.Register(request);
             return Ok(result);
         }
+
+        [HttpPost("authorize")]
+        public async Task<IActionResult> Authorize([FromBody] AuthRequest request)
+        {
+            var result = await _userService.Authorize(request);
+            return Ok(result);
+        }
     }
 }

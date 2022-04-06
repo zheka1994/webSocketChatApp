@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,26 @@ namespace websocketChat.Api.Internal.Filters
                 };
                 context.HttpContext.Response.ContentType = MediaTypeNames.Application.Json;
                 context.HttpContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+            }
+            else
+            {
+                context.Result = new ContentResult
+                {
+                    Content = JsonConvert.SerializeObject(new
+                    {
+                        exception.Message
+                    })
+                };
+                context.HttpContext.Response.ContentType = MediaTypeNames.Application.Json;
+
+                if (exception is UnauthorizedAccessException)
+                {
+                    context.HttpContext.Response.StatusCode = (int) HttpStatusCode.Unauthorized;
+                }
+                else
+                {
+                    context.HttpContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+                }
             }
         }
     }
