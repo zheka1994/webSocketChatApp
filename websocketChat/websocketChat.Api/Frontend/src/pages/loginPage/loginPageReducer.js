@@ -8,10 +8,10 @@ export default function login(state = {}, action) {
                 name: action.data
             };
         }
-        case loginPageActionTypes.CHANGE_LAST_NAME: {
+        case loginPageActionTypes.CHANGE_EMAIL: {
             return {
                 ...state,
-                lastName: action.data
+                email: action.data
             };
         }
         case loginPageActionTypes.CHANGE_PHONE_NUMBER: {
@@ -20,16 +20,22 @@ export default function login(state = {}, action) {
                 phoneNumber: action.data
             };
         }
+        case loginPageActionTypes.CHANGE_PASSWORD: {
+            return {
+                ...state,
+                password: action.data
+            };
+        }
         case loginPageActionTypes.SET_REGISTER_RESPONSE: {
             return {
                 ...state,
-                authResult: action.data
+                registerResult: action.data
             }
         }
         case loginPageActionTypes.SET_AUTH_RESPONSE: {
             return {
                 ...state,
-                registerResult: action.data
+                authResult: action.data
             }
         }
         default:

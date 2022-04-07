@@ -1,7 +1,4 @@
 import * as loginPageActionTypes from './loginPageActionTypes';
-import { call, select, put } from 'redux-saga/effects';
-import ApiMethods from "../../core/api/apiMethods";
-import * as apiRequestBuilder from "./business/apiRequestBuilder";
 
 export function changeName(data) {
     return {
@@ -10,9 +7,9 @@ export function changeName(data) {
     };
 }
 
-export function changeLastName(data) {
+export function changeEmail(data) {
     return {
-        type: loginPageActionTypes.CHANGE_LAST_NAME,
+        type: loginPageActionTypes.CHANGE_EMAIL,
         data
     };
 }
@@ -20,6 +17,13 @@ export function changeLastName(data) {
 export function changePhoneNumber(data) {
     return {
         type: loginPageActionTypes.CHANGE_PHONE_NUMBER,
+        data
+    };
+}
+
+export function changePassword(data) {
+    return {
+        type: loginPageActionTypes.CHANGE_PASSWORD,
         data
     };
 }

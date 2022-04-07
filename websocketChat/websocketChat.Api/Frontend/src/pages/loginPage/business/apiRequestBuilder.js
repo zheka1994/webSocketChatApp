@@ -1,17 +1,17 @@
 export function buildAuthRequest(loginState) {
-    const {lastName, name, phoneNumber} = loginState;
+    const {name, phoneNumber, email, password} = loginState;
     return {
-        lastName,
         name,
-        phoneNumber
+        phoneNumber,
+        email,
+        password
     };
 }
 
 export function buildRegisterRequest(loginState) {
-    const {lastName, name, phoneNumber} = loginState;
+    const {name, password} = loginState;
     return {
-        lastName,
         name,
-        phoneNumber
+        password
     };
 }

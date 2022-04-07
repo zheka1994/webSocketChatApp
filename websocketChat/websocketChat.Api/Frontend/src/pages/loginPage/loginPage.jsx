@@ -32,17 +32,17 @@ export default function LoginPage(props) {
                         <TabsItem
                             active={activeTabNumber === 1}
                             onClick={() => setActiveTab(1)}>
-                            Вход
+                            Регистрация
                         </TabsItem>
                         <TabsItem
                             active={activeTabNumber === 2}
                             onClick={() => setActiveTab(2)}>
-                            Регистрация
+                            Вход
                         </TabsItem>
                     </div>
                     <FormBody active={activeTabNumber === 1}>
                         <div className="auth__label">
-                            Введите имя, фамилию (по желанию) и номер телефона
+                            Введите имя, email, номер телефона и пароль
                         </div>
                         <div className="input">
                             <input
@@ -56,9 +56,9 @@ export default function LoginPage(props) {
                             <input
                                 className="input__control input__control_full-width"
                                 type="text"
-                                placeholder="Фамилия"
+                                placeholder="Email"
                                 value={login?.lastName ?? ""}
-                                onChange={(e) => dispatch(loginPageActions.changeLastName(e.target.value))} />
+                                onChange={(e) => dispatch(loginPageActions.changeEmail(e.target.value))} />
                         </div>
                         <div className="input">
                             <input
@@ -68,16 +68,37 @@ export default function LoginPage(props) {
                                 value={login?.phoneNumber ?? ""}
                                 onChange={(e) => dispatch(loginPageActions.changePhoneNumber(e.target.value))} />
                         </div>
+                        <div className="input">
+                            <input
+                                className="input__control input__control_full-width"
+                                type="password"
+                                placeholder="Пароль"
+                                value={login?.password ?? ""}
+                                onChange={(e) => dispatch(loginPageActions.changePassword(e.target.value))} />
+                        </div>
                         <button type="button" className="auth__button" onClick={onRegisterButtonClick}>
                             Далее
                         </button>
                     </FormBody>
                     <FormBody active={activeTabNumber === 2}>
                         <div className="auth__label">
-                            Введите номер телефона
+                            Введите имя и пароль
                         </div>
                         <div className="input">
-                            <input className="input__control input__control_full-width" type="text" placeholder="Телефон"/>
+                            <input
+                                className="input__control input__control_full-width"
+                                type="text"
+                                placeholder="Имя"
+                                value={login?.name ?? ""}
+                                onChange={(e) => dispatch(loginPageActions.changeName(e?.target?.value))} />
+                        </div>
+                        <div className="input">
+                            <input
+                                className="input__control input__control_full-width"
+                                type="password"
+                                placeholder="Пароль"
+                                value={login?.password ?? ""}
+                                onChange={(e) => dispatch(loginPageActions.changePassword(e?.target?.value))} />
                         </div>
                         <button type="button" className="auth__button" onClick={onAuthButtonClick}>
                             Далее

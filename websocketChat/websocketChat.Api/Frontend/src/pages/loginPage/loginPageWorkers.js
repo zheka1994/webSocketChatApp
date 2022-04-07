@@ -2,7 +2,6 @@ import {call, put, select} from "redux-saga/effects";
 import ApiMethods from "../../core/api/apiMethods";
 import * as apiRequestBuilder from "./business/apiRequestBuilder";
 import * as loginPageActions from "./loginPageActions";
-import login from "./loginPageReducer";
 
 export function* authUserWorker() {
     const {login} = yield select();
@@ -18,10 +17,20 @@ export function* registerUserWorker() {
 
 async function authUser(login) {
     const apiMethods = new ApiMethods();
-    return await apiMethods.auth(apiRequestBuilder.buildAuthRequest(login));
+    try {
+        return await apiMethods.auth(apiRequestBuilder.buildAuthRequest(login));
+    } catch (ex) {
+        console.log(ex);
+    }
+    
 }
 
 async function registerUser(login) {
     const apiMethods = new ApiMethods();
-    return await apiMethods.register(apiRequestBuilder.buildRegisterRequest(login));
+    try {
+        return await apiMethods.register(apiRequestBuilder.buildRegisterRequest(login));
+    } catch (ex) {
+        console.log(ex);
+    }
+    
 }

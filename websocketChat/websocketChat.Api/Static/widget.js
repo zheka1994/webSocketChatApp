@@ -17,5 +17,5 @@
     }
 
     loadCss("/appe953735e1554fdd4b5c2.css");
-    loadJavaScript("/app80034a2b694116a02f97.js");
+    loadJavaScript("/app5d11169037c825fc7d7b.js");
 })();
