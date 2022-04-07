@@ -1,5 +1,16 @@
 .input {
     position: relative;
+    
+    &__label {
+        &-text {
+            margin-bottom: 10px;
+            font-size: 0.8em;
+        }
+        
+        &_error {
+            color: $error-color;
+        }
+    }
 
     &__control {
         outline: none;
@@ -14,6 +25,13 @@
 
         &:focus {
             @include setAlpha(border-color, $violet, 1);
+        }
+        
+        &_error {
+            border: 0.5px solid $error-color;
+            &:focus {
+                @include setAlpha(border-color, $error-color, 1);
+            }
         }
     }
 

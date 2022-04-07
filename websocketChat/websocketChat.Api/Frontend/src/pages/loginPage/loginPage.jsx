@@ -85,12 +85,18 @@ export default function LoginPage(props) {
                             Введите имя и пароль
                         </div>
                         <div className="input">
-                            <input
-                                className="input__control input__control_full-width"
-                                type="text"
-                                placeholder="Имя"
-                                value={login?.name ?? ""}
-                                onChange={(e) => dispatch(loginPageActions.changeName(e?.target?.value))} />
+                            <label className="input__label input__label_error">
+                                <div className="input__label-text">
+                                    Неверно введено имя
+                                </div>
+                                <input
+                                    className="input__control input__control_error input__control_full-width"
+                                    data-error="Введите имя"
+                                    type="text"
+                                    placeholder="Имя"
+                                    value={login?.name ?? ""}
+                                    onChange={(e) => dispatch(loginPageActions.changeName(e?.target?.value))} />
+                            </label>
                         </div>
                         <div className="input">
                             <input
