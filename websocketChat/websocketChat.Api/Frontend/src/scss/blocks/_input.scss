@@ -3,12 +3,20 @@
     
     &__label {
         &-text {
-            margin-bottom: 10px;
-            font-size: 0.8em;
+            display: block;
+            position: absolute;
+            left: 5px;
+            top: -0.6em;
+            background-color: $white;
+            font-size: 0.6em;
+            padding: 0 8px 0 8px;
         }
         
         &_error {
             color: $error-color;
+            input::placeholder{
+                color: transparent;
+            }
         }
     }
 
@@ -42,5 +50,43 @@
         top: 50%;
         right: 9px;
         transform: translateY(-50%);
+    }
+    
+    &__help {
+        display: flex;
+        flex-direction: row-reverse;
+        margin-top: 5px;
+        position: relative;
+
+        &-icon-container {
+            width: 25px;
+            height: 25px;
+            //word-wrap: break-word;
+            position: relative;
+
+            .input__help-tooltip {
+                position: absolute;
+                bottom: 100%;
+                right: 0;
+                padding: 10px;
+                background-color: $black;
+                color: $white;
+                opacity: 0;
+                transition: opacity .5s;
+                border-radius: 5px;
+                max-width: $mobile-width;
+                min-width: 200px;
+            }
+
+            &:hover {
+                .input__help-tooltip {
+                    opacity: 0.7;
+                }
+            }
+        }
+
+        &-icon {
+            cursor: pointer;
+        }
     }
 }

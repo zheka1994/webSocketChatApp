@@ -54,7 +54,7 @@ const buildConfig = {
             },
             {
                 test: /\.(png|jpeg|gif|svg|ttf)$/i,
-                type:  'assets/resource'
+                type:  'asset/resource'
             },
         ],
     },

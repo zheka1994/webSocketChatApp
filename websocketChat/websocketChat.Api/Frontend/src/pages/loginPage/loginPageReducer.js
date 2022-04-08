@@ -2,6 +2,19 @@ import * as loginPageActionTypes from './loginPageActionTypes';
 
 export default function login(state = {}, action) {
     switch (action.type) {
+        case loginPageActionTypes.CHANGE_ACTIVE_TAB_NUMBER: {
+            return {
+                ...state,
+                name: '',
+                email: '',
+                phoneNumber: '',
+                password: '',
+                registerResult: '',
+                authResult: '',
+                validationResult: {},
+                activeTabNumber: action.data
+            }
+        }
         case loginPageActionTypes.CHANGE_NAME: {
             return {
                 ...state,
@@ -25,6 +38,14 @@ export default function login(state = {}, action) {
                 ...state,
                 password: action.data
             };
+        }
+        case loginPageActionTypes.SET_FORM_VALIDATION_RESULT: {
+            return {
+                ...state,
+                validationResult: {
+                    ...state.validationResult, [action.data.fieldName]: action.data
+                }
+            }
         }
         case loginPageActionTypes.SET_REGISTER_RESPONSE: {
             return {

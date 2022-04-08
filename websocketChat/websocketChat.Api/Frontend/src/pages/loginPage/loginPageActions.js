@@ -1,5 +1,12 @@
 import * as loginPageActionTypes from './loginPageActionTypes';
 
+export function changeActiveTabNumber(data) {
+    return {
+        type: loginPageActionTypes.CHANGE_ACTIVE_TAB_NUMBER,
+        data
+    };
+}
+
 export function changeName(data) {
     return {
         type: loginPageActionTypes.CHANGE_NAME,
@@ -38,6 +45,13 @@ export function registerUser() {
     return {
         type: loginPageActionTypes.REGISTER_USER
     };
+}
+
+export function setFormValidationResult(data) {
+    return {
+        type: loginPageActionTypes.SET_FORM_VALIDATION_RESULT,
+        data
+    }
 }
 
 export function setAuthResponse(data) {

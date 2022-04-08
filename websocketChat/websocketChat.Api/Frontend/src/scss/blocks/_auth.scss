@@ -13,6 +13,7 @@
         top: 128px;
         left: 50%;
         transform: translateX(-50%);
+        min-width: $mobile-width;
 
         &-header {
             color: $white;
