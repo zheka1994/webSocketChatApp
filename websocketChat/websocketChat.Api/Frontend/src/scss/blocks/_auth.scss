@@ -40,16 +40,42 @@
         appearance: none;
         border: 0;
         border-radius: 5px;
-        @include setAlpha(background, $violet, 0.8);
+        
         color: white;
         padding-top: 10px;
         padding-bottom: 10px;
         text-align: center;
-
-        &:hover {
-            cursor: pointer;
-            @include setAlpha(background, $violet, 1);
+        
+        &_jwt {
+            @include setAlpha(background, $violet, 0.8);
+            &:hover {
+                cursor: pointer;
+                @include setAlpha(background, $violet, 1);
+            }
         }
+
+        &-container {
+            display: flex;
+        }
+        
+        &_vk {
+            @include setAlpha(background, $violet, 0.6);
+            &:hover {
+                cursor: pointer;
+                @include setAlpha(background, $violet, 0.8);
+            }
+        }
+        
+        &-text-container {
+            margin-left: 10px;
+            align-self: center;
+        }
+        
+    }
+    
+    &__svg-container {
+        width: 30px;
+        height: 30px;
     }
 
     &__label {

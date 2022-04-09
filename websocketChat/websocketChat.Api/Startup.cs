@@ -1,12 +1,13 @@
+using System;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using websocketChat.Api.Internal;
 using websocketChat.Api.Internal.Filters;
 using websocketChat.Api.Internal.Validation;
@@ -40,14 +41,25 @@ namespace websocketChat.Api
                 ?.GetSection("Db")
                 ?.Value ?? "";
             services.AddOptions();
-            services.Configure<UserServiceOptions>(_configuration
-                .GetSection("AppSettings")
-                ?.GetSection("UserServiceOptions"));
+            services.Configure<JwtOptions>(options =>
+            {
+                var jwtOptionsSection = _configuration
+                    .GetSection("AppSettings")
+                    ?.GetSection("JwtOptions");
+                options.SecretKey = jwtOptionsSection?.GetSection("SecretKey")?.Value;
+                options.Audience = jwtOptionsSection?.GetSection("Audience")?.Value;
+                options.Issuer = jwtOptionsSection?.GetSection("Issuer")?.Value;
+                if (double.TryParse(jwtOptionsSection.GetSection("ExpirationTimeHours")?.Value, out double time))
+                {
+                    options.ExpirationTimeHours = TimeSpan.FromHours(time);
+                }
+            });
             services.AddDbContext<ChatDbContext>(options => options
                 .UseNpgsql(dbConnectionString)
                 .UseSnakeCaseNamingConvention()
                 .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
                 .EnableSensitiveDataLogging());
+            services.AddAuthorizationServices(_configuration);
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddControllersWithViews(options =>
             {
@@ -71,10 +83,11 @@ namespace websocketChat.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseStaticFiles();
             app.UseRouting();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}");

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using websocketChat.Core;
+using websocketChat.Core.Authorization;
 using websocketChat.Core.Models;
 using websocketChat.Data;
 using websocketChat.Data.Models;
@@ -18,10 +19,10 @@ namespace websocketChat.UserService
     public class UserService : IUserService
     {
         private readonly IRepository _repository;
-        private readonly IOptions<UserServiceOptions> _options;
+        private readonly IOptions<JwtOptions> _options;
         private const int SaltLength = 8;
 
-        public UserService(IRepository repository, IOptions<UserServiceOptions> options)
+        public UserService(IRepository repository, IOptions<JwtOptions> options)
         {
             _repository = repository;
             _options = options;
@@ -40,7 +41,7 @@ namespace websocketChat.UserService
                 throw new UnauthorizedAccessException("Неверный пароль пользователя");
             }
 
-            var token = GenerateToken(user);
+            var token = JwtTokenExtensions.GenerateToken(GetUserIdentityFromUser(user), _options?.Value);
             
             return new AuthResponse
             {
@@ -68,9 +69,10 @@ namespace websocketChat.UserService
                 PwdSalt = salt,
                 PwdHash = hash
             };
-            var token = GenerateToken(user);
+            var token = JwtTokenExtensions.GenerateToken(GetUserIdentityFromUser(user), _options?.Value);
             await _repository.Users.AddAsync(user);
             await _repository.SaveChangesAsync();
+            
             return new RegisterResponse()
             {
                 Token = token
@@ -83,32 +85,20 @@ namespace websocketChat.UserService
             return user != null;
         }
 
-        private string GenerateToken(User user)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_options.Value.SecretKey);
-            var tokenDescriptor = new SecurityTokenDescriptor()
-            {
-                Issuer = "Chat-Api",
-                Audience = "Chat-frontend",
-                Expires = DateTime.UtcNow.AddHours(3),
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim("name", user.Name),
-                    new Claim("phone", user.PhoneNumber),
-                    new Claim("email", user.Email)
-                }),
-                SigningCredentials =
-                    new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
-        }
-
         private bool IsPasswordCorrect(User user, string password)
         {
             var currentHash = CryptoExtensions.CreateHash(password, user.PwdSalt);
             return currentHash == user.PwdHash;
+        }
+
+        private UserIdentity GetUserIdentityFromUser(User user)
+        {
+            return new UserIdentity
+            {
+                Email = user.Email,
+                Name = user.Name,
+                PhoneNumber = user.PhoneNumber
+            };
         }
     }
 }

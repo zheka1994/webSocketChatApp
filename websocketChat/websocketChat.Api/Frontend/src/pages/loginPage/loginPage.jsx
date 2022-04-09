@@ -6,6 +6,7 @@ import * as loginPageActions from './loginPageActions';
 import TabsItem from './components/tabsItem';
 import FormBody from "./components/formBody";
 import TextField from "./components/textField";
+import Icons from "../../img/svg/icons-sprite.svg";
 
 export default function LoginPage() {
     const login = useSelector(store => store.login);
@@ -82,7 +83,7 @@ export default function LoginPage() {
                             type="password"
                             placeholder="Пароль"
                             helpMessage="Пароль должен содержать буквы, не должен начинаться с цифры" />
-                        <button type="button" className="auth__button" onClick={onRegisterButtonClick}>
+                        <button type="button" className="auth__button auth__button_jwt" onClick={onRegisterButtonClick}>
                             Далее
                         </button>
                     </FormBody>
@@ -107,8 +108,20 @@ export default function LoginPage() {
                             type="password"
                             placeholder="Пароль"
                             helpMessage="Пароль должен содержать буквы, не должен начинаться с цифры" />
-                        <button type="button" className="auth__button" onClick={onAuthButtonClick}>
+                        <button type="button" className="auth__button auth__button_jwt" onClick={onAuthButtonClick}>
                             Далее
+                        </button>
+                        <button type="button" className="auth__button auth__button_vk">
+                            <div className="auth__button-container">
+                                <div class="auth__svg-container">
+                                    <svg width="100%" height="100%" viewBox="0 0 40 40" className="input__help-icon">
+                                        <use xlinkHref={`${Icons}#vk`}/>
+                                    </svg>
+                                </div>
+                                <span className="auth__button-text-container">
+                                    Авторизоваться через Вконтакте
+                                </span>
+                            </div>
                         </button>
                     </FormBody>
                 </div>

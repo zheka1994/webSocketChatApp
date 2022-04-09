@@ -4,7 +4,7 @@
   "description": "frontend for websocket chat app",
   "main": "app.js",
   "scripts": {
-    "build": "rimraf dist && webpack --watch",
+    "build": "rimraf dist && webpack",
     "wds": "rimraf dist && webpack serve"
   },
   "author": "eugen guziy",
