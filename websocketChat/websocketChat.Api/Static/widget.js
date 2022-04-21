@@ -16,6 +16,6 @@
         head.append(link);
     }
 
-    loadCss("/appc534c85741f96c3b814f.css");
-    loadJavaScript("/appce2e767560e69c1b5fda.js");
+    loadCss("/appb81465a4afc52b6cb9b6.css");
+    loadJavaScript("/appe4dcc5b10b2ad4d2dc7b.js");
 })();

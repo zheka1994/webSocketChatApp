@@ -11,7 +11,7 @@ console.log(store);
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router/>
+        <Router basename="/" />
     </Provider>,
     document.getElementById("chat-app")
 );

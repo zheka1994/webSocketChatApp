@@ -14,5 +14,9 @@ namespace websocketChat.UserService.Exceptions
         public UserServiceException(string message) : base(message)
         {
         }
+        
+        public UserServiceException(string message, int code) : base(message, code)
+        {
+        }
     }
 }

@@ -7,5 +7,6 @@ namespace websocketChat.UserService
     {
         public Task<AuthResponse> Authorize(AuthRequest request);
         public Task<RegisterResponse> Register(RegisterRequest request);
+        public Task<AuthResponse> OAuthorize(OAuthRequest request);
     }
 }

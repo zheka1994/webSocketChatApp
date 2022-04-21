@@ -13,19 +13,23 @@ using websocketChat.Data;
 using websocketChat.Data.Models;
 using websocketChat.UserService.Exceptions;
 using websocketChat.UserService.Models;
+using websocketChat.UserService.Models.Enums;
+using websocketChat.UserService.OAuth;
 
 namespace websocketChat.UserService
 {
     public class UserService : IUserService
     {
         private readonly IRepository _repository;
-        private readonly IOptions<JwtOptions> _options;
+        private readonly IOptions<JwtOptions> _jwtOptions;
+        private readonly IOptions<OAuthOptions> _oAuthOptions;
         private const int SaltLength = 8;
 
-        public UserService(IRepository repository, IOptions<JwtOptions> options)
+        public UserService(IRepository repository, IOptions<JwtOptions> jwtOptions, IOptions<OAuthOptions> oAuthOptions)
         {
             _repository = repository;
-            _options = options;
+            _jwtOptions = jwtOptions;
+            _oAuthOptions = oAuthOptions;
         }
 
         public async Task<AuthResponse> Authorize(AuthRequest request)
@@ -41,7 +45,7 @@ namespace websocketChat.UserService
                 throw new UnauthorizedAccessException("Неверный пароль пользователя");
             }
 
-            var token = JwtTokenExtensions.GenerateToken(GetUserIdentityFromUser(user), _options?.Value);
+            var token = JwtTokenExtensions.GenerateToken(GetUserIdentityFromUser(user), _jwtOptions?.Value);
             
             return new AuthResponse
             {
@@ -49,6 +53,14 @@ namespace websocketChat.UserService
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber
             };
+        }
+
+        public async Task<AuthResponse> OAuthorize(OAuthRequest request)
+        {
+            var oAuthProvider = new OAuthProviderFactory()
+                .GetAuthProvider(request.Type, _oAuthOptions.Value);
+            var result = await oAuthProvider.Authorize(request);
+            return result;
         }
 
         public async Task<RegisterResponse> Register(RegisterRequest request)
@@ -69,7 +81,7 @@ namespace websocketChat.UserService
                 PwdSalt = salt,
                 PwdHash = hash
             };
-            var token = JwtTokenExtensions.GenerateToken(GetUserIdentityFromUser(user), _options?.Value);
+            var token = JwtTokenExtensions.GenerateToken(GetUserIdentityFromUser(user), _jwtOptions?.Value);
             await _repository.Users.AddAsync(user);
             await _repository.SaveChangesAsync();
             

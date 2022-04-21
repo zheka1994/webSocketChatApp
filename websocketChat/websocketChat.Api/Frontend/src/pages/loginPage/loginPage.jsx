@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import * as loginPageActions from './loginPageActions';
+import { getCurrentRoot } from "../../core/utils/urlExtensions";
 
 import TabsItem from './components/tabsItem';
 import FormBody from "./components/formBody";
@@ -20,6 +21,11 @@ export default function LoginPage() {
     
     function onAuthButtonClick() {
         dispatch(loginPageActions.authUser());
+    }
+    
+    function onVkOAuthButtonClick() {
+        const redirectUri = `${getCurrentRoot()}/oauth-redirect`;
+        window.location = `https://oauth.vk.com/authorize?client_id=8132725&display=page&redirect_uri=${redirectUri}&response_type=code&v=5.131`;
     }
     
     function changeActiveTabNumber(activeTabNumber) {
@@ -111,7 +117,7 @@ export default function LoginPage() {
                         <button type="button" className="auth__button auth__button_jwt" onClick={onAuthButtonClick}>
                             Далее
                         </button>
-                        <button type="button" className="auth__button auth__button_vk">
+                        <button type="button" className="auth__button auth__button_vk" onClick={onVkOAuthButtonClick}>
                             <div className="auth__button-container">
                                 <div class="auth__svg-container">
                                     <svg width="100%" height="100%" viewBox="0 0 40 40" className="input__help-icon">
@@ -129,4 +135,3 @@ export default function LoginPage() {
         </>
     );
 }
-//Пароль должен содержать буквы, не должен начинаться с цифры, не должен содержать пробел и символы -,(,),/

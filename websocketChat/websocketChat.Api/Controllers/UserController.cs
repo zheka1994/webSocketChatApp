@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using websocketChat.UserService;
 using websocketChat.UserService.Models;
+using websocketChat.UserService.Models.Enums;
 
 namespace websocketChat.Api.Controllers
 {
@@ -28,6 +29,25 @@ namespace websocketChat.Api.Controllers
         {
             var result = await _userService.Authorize(request);
             return Ok(result);
+        }
+
+        [HttpPost("oauth/vk")]
+        public async Task<IActionResult> OAuthAuthorize([FromBody] OAuthRequest request)
+        {
+            var result = await _userService.OAuthorize(request);
+            return Ok(result);
+        }
+
+        [HttpGet("userInformation")]
+        public IActionResult UserInformation(string returnUrl)
+        {
+            return Ok();
+        }
+        
+        [HttpGet("callback")]
+        public IActionResult Callback(string returnUrl)
+        {
+            return Ok();
         }
     }
 }

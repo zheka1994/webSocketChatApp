@@ -6,18 +6,18 @@ namespace websocketChat.UserService.Models.Enums
     public enum AuthType : byte
     {
         /// <summary>
-        /// JWT-токен
-        /// </summary>
-        Jwt = 1,
-        
-        /// <summary>
         /// Google почта
         /// </summary>
-        Google = 2,
+        Google = 1,
         
         /// <summary>
         /// Телеграмм
         /// </summary>
-        Telegram = 3
+        Telegram = 2,
+        
+        /// <summary>
+        /// Вконтакте
+        /// </summary>
+        Vk = 3
     }
 }

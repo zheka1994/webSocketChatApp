@@ -13,6 +13,11 @@ export default class ApiMethods {
         return await this.api.post(url, request);
     }
     
+    async vkOAuth(request) {
+        const url = this.apiEndpoint + '/user/oauth/vk';
+        return await this.api.post(url, request);
+    }
+    
     async register(request) {
         const url = this.apiEndpoint + '/user/register';
         return await this.api.post(url, request);

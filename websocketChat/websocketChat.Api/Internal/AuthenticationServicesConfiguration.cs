@@ -1,18 +1,21 @@
 using System;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.OAuth.Claims;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using websocketChat.Core.Authorization;
 
 namespace websocketChat.Api.Internal
 {
-    public static class AuthorizationServicesConfiguration
+    public static class AuthenticationServicesConfiguration
     {
-        public static void AddAuthorizationServices(this IServiceCollection services, IConfiguration _configuration)
+        public static void AddAuthenticationServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddAuthentication()
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    var jwtOptionsSection = _configuration
+                    var jwtOptionsSection = configuration
                         .GetSection("AppSettings")
                         ?.GetSection("JwtOptions");
                     var issuerSigningKey = jwtOptionsSection
@@ -42,6 +45,19 @@ namespace websocketChat.Api.Internal
                         ClockSkew = expirationTimeHours
                     };
                 });
+            /* .AddOAuth("vkOauth", options =>
+            {
+                var vkAuthOptionsSection = configuration
+                    .GetSection("AppSettings")
+                    ?.GetSection("VkAuthOptions");
+                options.AuthorizationEndpoint = vkAuthOptionsSection?.GetSection("AuthorizationEndpoint").Value!;
+                options.ClientId = vkAuthOptionsSection?.GetSection("ClientId").Value!;
+                options.TokenEndpoint = vkAuthOptionsSection?.GetSection("TokenEndpoint").Value!;
+                options.ClientSecret = vkAuthOptionsSection?.GetSection("ClientSecret").Value!;
+                options.UserInformationEndpoint = "/api/v1/user/userInformation";
+                options.CallbackPath = "/api/v1/user/callback";
+                options.Scope.Add("email");
+            }); */
         }
     }
 }

@@ -2,5 +2,10 @@
   "build": {
     "publicPath": "/",
     "testFrontendByWds": true
+  },
+  "app": {
+    "oAuth": {
+      "clientId": "8132725"
+    }
   }
 }

@@ -3,6 +3,7 @@ const AssetsWebpackPlugin = require('assets-webpack-plugin');
 const path = require('path');
 const HandlebarsWebpackPlugin = require('./plugins/handlebarsPlugin');
 const CopyPlugin = require('./plugins/copyPlugin');
+const webpack = require('webpack');
 
 const outputPath = path.join(__dirname, 'dist');
 const config = require('./configurations/config.json');
@@ -71,6 +72,9 @@ const buildConfig = {
         hot: true
     },
     plugins: [
+        new webpack.DefinePlugin({
+            OAUTH_VK_CLIENT_ID: config.app.oAuth.clientId
+        }),
         new MiniCssExtractPlugin({
             filename: '[name][contenthash].css'
         }),

@@ -2,15 +2,16 @@ using System;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using websocketChat.Api.Internal;
 using websocketChat.Api.Internal.Filters;
 using websocketChat.Api.Internal.Validation;
+using websocketChat.Api.Middlewares;
 using websocketChat.Core.Models;
 using websocketChat.Data;
 
@@ -54,12 +55,14 @@ namespace websocketChat.Api
                     options.ExpirationTimeHours = TimeSpan.FromHours(time);
                 }
             });
+            services.Configure<OAuthOptions>(_configuration.GetSection("AppSettings:OAuthOptions"));
+            services.Configure<VkAuthOptions>(_configuration.GetSection("AppSettings:OAuthOptions:VkAuthOptions"));
             services.AddDbContext<ChatDbContext>(options => options
                 .UseNpgsql(dbConnectionString)
                 .UseSnakeCaseNamingConvention()
                 .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
                 .EnableSensitiveDataLogging());
-            services.AddAuthorizationServices(_configuration);
+            services.AddAuthenticationServices(_configuration);
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddControllersWithViews(options =>
             {
@@ -84,6 +87,8 @@ namespace websocketChat.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseMiddleware<FallbackMiddleware>();
+            
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
