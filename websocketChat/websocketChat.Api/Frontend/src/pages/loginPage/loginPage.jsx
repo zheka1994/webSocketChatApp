@@ -25,7 +25,7 @@ export default function LoginPage() {
     
     function onVkOAuthButtonClick() {
         const redirectUri = `${getCurrentRoot()}/oauth-redirect`;
-        window.location = `https://oauth.vk.com/authorize?client_id=8132725&display=page&redirect_uri=${redirectUri}&response_type=code&v=5.131`;
+        window.location = `https://oauth.vk.com/authorize?client_id=${OAUTH_VK_CLIENT_ID}&display=page&redirect_uri=${redirectUri}&scope=email&response_type=code&v=5.131`;
     }
     
     function changeActiveTabNumber(activeTabNumber) {

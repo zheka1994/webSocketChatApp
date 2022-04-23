@@ -9,9 +9,12 @@ namespace websocketChat.UserService.OAuth.VkOAuthProvider
         public string AccessToken { get; set; }
         
         [JsonPropertyName("expires_in")]
-        public TimeSpan ExpiresIn { get; set; }
+        public int ExpiresIn { get; set; }
         
         [JsonPropertyName("user_id")]
         public int UserId { get; set; }
+
+        [JsonPropertyName("email")]
+        public string Email { get; set; }
     }
 }

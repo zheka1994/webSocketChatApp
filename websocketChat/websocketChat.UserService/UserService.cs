@@ -58,7 +58,7 @@ namespace websocketChat.UserService
         public async Task<AuthResponse> OAuthorize(OAuthRequest request)
         {
             var oAuthProvider = new OAuthProviderFactory()
-                .GetAuthProvider(request.Type, _oAuthOptions.Value);
+                .GetAuthProvider(request.Type, _oAuthOptions.Value, _repository);
             var result = await oAuthProvider.Authorize(request);
             return result;
         }
@@ -101,16 +101,6 @@ namespace websocketChat.UserService
         {
             var currentHash = CryptoExtensions.CreateHash(password, user.PwdSalt);
             return currentHash == user.PwdHash;
-        }
-
-        private UserIdentity GetUserIdentityFromUser(User user)
-        {
-            return new UserIdentity
-            {
-                Email = user.Email,
-                Name = user.Name,
-                PhoneNumber = user.PhoneNumber
-            };
         }
     }
 }

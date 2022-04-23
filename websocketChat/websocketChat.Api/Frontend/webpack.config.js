@@ -73,7 +73,7 @@ const buildConfig = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            OAUTH_VK_CLIENT_ID: config.app.oAuth.clientId
+            OAUTH_VK_CLIENT_ID: config.app.oAuth.clientId,
         }),
         new MiniCssExtractPlugin({
             filename: '[name][contenthash].css'

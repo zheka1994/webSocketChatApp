@@ -45,4 +45,10 @@
       <ProjectReference Include="..\websocketChat.UserService\websocketChat.UserService.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Update="appsettings.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>
