@@ -1,5 +1,6 @@
 node_modules
-dist/
+**/dist
+**/Static
 .DS_Store
 *.swp
 *.*~
@@ -33,3 +34,4 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
+
