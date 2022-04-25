@@ -14,11 +14,13 @@ namespace websocketChat.UserService.OAuth.VkOAuthProvider
     public class VkOAuthProvider : IOAuthProvider
     {
         private readonly VkAuthOptions _options;
+        private readonly JwtOptions _jwtOptions;
         private readonly IRepository _repository;
-        public VkOAuthProvider(VkAuthOptions options, IRepository repository)
+        public VkOAuthProvider(VkAuthOptions options, IRepository repository, JwtOptions jwtOptions)
         {
             _options = options;
             _repository = repository;
+            _jwtOptions = jwtOptions;
         }
         public async Task<AuthResponse> Authorize(OAuthRequest request)
         {
@@ -32,11 +34,11 @@ namespace websocketChat.UserService.OAuth.VkOAuthProvider
                     throw new UserServiceException(userNotFoundExceptionMessage);
                 }
                 var user = await _repository.Users.SingleOrDefaultAsync(u => u.Email == email);
-                if (string.IsNullOrEmpty(email))
+                if (user == null)
                 {
                     throw new UserServiceException(userNotFoundExceptionMessage);
                 }
-                var token = JwtTokenExtensions.GenerateToken(GetUserIdentityFromUser(user), _jwtOptions?.Value);
+                var token = JwtTokenExtensions.GenerateToken(UserIdentityHelper.GetUserIdentityFromUser(user), _jwtOptions);
 
                 return new AuthResponse
                 {
@@ -44,7 +46,6 @@ namespace websocketChat.UserService.OAuth.VkOAuthProvider
                     Email = user.Email,
                     PhoneNumber = user.PhoneNumber
                 };
-                return null;
             }
             catch (UserServiceException)
             {

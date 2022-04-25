@@ -15,6 +15,16 @@ export default function OAuthRedirectPage() {
     }, []);
     
     return (
-        <div/>
+        <div className="preloader">
+            <div className="preloader__wrap">
+                <div class="preloader__one one"></div>
+                <div class="preloader__one two"></div>
+                <div class="preloader__one three"></div>
+                <div class="preloader__one four"></div>
+                <div class="preloader__two five"></div>
+                <div class="preloader__two six"></div>
+                <div class="preloader__two seven"></div>
+            </div>
+        </div>
     )
 }

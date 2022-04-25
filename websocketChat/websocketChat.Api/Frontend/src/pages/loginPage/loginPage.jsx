@@ -57,7 +57,9 @@ export default function LoginPage() {
                             Введите имя, email, номер телефона и пароль
                         </div>
                         <TextField
+                            key="reg_name"
                             fullWidth
+                            autoFocus
                             error={login?.validationResult?.name?.isValid === false}
                             labelMessage={login?.validationResult?.name?.message}
                             onChange={(e) => dispatch(loginPageActions.changeName(e?.target?.value))}
@@ -65,7 +67,9 @@ export default function LoginPage() {
                             type="text"
                             placeholder="Имя" />
                         <TextField
+                            key="reg_email"
                             fullWidth
+                            autoFocus
                             error={login?.validationResult?.email?.isValid === false}
                             labelMessage={login?.validationResult?.email?.message}
                             onChange={(e) => dispatch(loginPageActions.changeEmail(e?.target?.value))}
@@ -73,7 +77,9 @@ export default function LoginPage() {
                             type="text"
                             placeholder="Email" />
                         <TextField
+                            key="reg_phone"
                             fullWidth
+                            autoFocus
                             error={login?.validationResult?.phoneNumber?.isValid === false}
                             labelMessage={login?.validationResult?.phoneNumber?.message}
                             onChange={(e) => dispatch(loginPageActions.changePhoneNumber(e?.target?.value))}
@@ -81,7 +87,9 @@ export default function LoginPage() {
                             type="text"
                             placeholder="Телефон" />
                         <TextField
+                            key="reg_pwd"
                             fullWidth
+                            autoFocus
                             error={login?.validationResult?.password?.isValid === false}
                             labelMessage={login?.validationResult?.password?.message}
                             onChange={(e) => dispatch(loginPageActions.changePassword(e?.target?.value))}
@@ -97,8 +105,10 @@ export default function LoginPage() {
                         <div className="auth__label">
                             Введите имя и пароль
                         </div>
-                        <TextField 
+                        <TextField
+                            key="auth_name"
                             fullWidth
+                            autoFocus
                             error={login?.validationResult?.name?.isValid === false}
                             labelMessage={login?.validationResult?.name?.message}
                             onChange={(e) => dispatch(loginPageActions.changeName(e?.target?.value))}
@@ -106,7 +116,9 @@ export default function LoginPage() {
                             type="text"
                             placeholder="Имя" />
                         <TextField
+                            key="auth_pwd"
                             fullWidth
+                            autoFocus
                             error={login?.validationResult?.password?.isValid === false}
                             labelMessage={login?.validationResult?.password?.message}
                             onChange={(e) => dispatch(loginPageActions.changePassword(e?.target?.value))}
@@ -119,7 +131,7 @@ export default function LoginPage() {
                         </button>
                         <button type="button" className="auth__button auth__button_vk" onClick={onVkOAuthButtonClick}>
                             <div className="auth__button-container">
-                                <div class="auth__svg-container">
+                                <div className="auth__svg-container">
                                     <svg width="100%" height="100%" viewBox="0 0 40 40" className="input__help-icon">
                                         <use xlinkHref={`${Icons}#vk`}/>
                                     </svg>

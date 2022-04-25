@@ -10,7 +10,7 @@ namespace websocketChat.UserService
 {
     public class UserIdentityHelper
     {
-        private UserIdentity GetUserIdentityFromUser(User user)
+        public static UserIdentity GetUserIdentityFromUser(User user)
         {
             return new UserIdentity
             {

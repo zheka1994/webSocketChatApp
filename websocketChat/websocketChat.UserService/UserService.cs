@@ -45,7 +45,7 @@ namespace websocketChat.UserService
                 throw new UnauthorizedAccessException("Неверный пароль пользователя");
             }
 
-            var token = JwtTokenExtensions.GenerateToken(GetUserIdentityFromUser(user), _jwtOptions?.Value);
+            var token = JwtTokenExtensions.GenerateToken(UserIdentityHelper.GetUserIdentityFromUser(user), _jwtOptions?.Value);
             
             return new AuthResponse
             {
@@ -58,7 +58,7 @@ namespace websocketChat.UserService
         public async Task<AuthResponse> OAuthorize(OAuthRequest request)
         {
             var oAuthProvider = new OAuthProviderFactory()
-                .GetAuthProvider(request.Type, _oAuthOptions.Value, _repository);
+                .GetAuthProvider(request.Type, _oAuthOptions.Value, _repository, _jwtOptions.Value);
             var result = await oAuthProvider.Authorize(request);
             return result;
         }
@@ -81,7 +81,7 @@ namespace websocketChat.UserService
                 PwdSalt = salt,
                 PwdHash = hash
             };
-            var token = JwtTokenExtensions.GenerateToken(GetUserIdentityFromUser(user), _jwtOptions?.Value);
+            var token = JwtTokenExtensions.GenerateToken(UserIdentityHelper.GetUserIdentityFromUser(user), _jwtOptions?.Value);
             await _repository.Users.AddAsync(user);
             await _repository.SaveChangesAsync();
             
