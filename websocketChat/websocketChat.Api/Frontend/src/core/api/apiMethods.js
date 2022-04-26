@@ -13,8 +13,8 @@ export default class ApiMethods {
         return await this.api.post(url, request);
     }
     
-    async vkOAuth(request) {
-        const url = this.apiEndpoint + '/user/oauth/vk';
+    async oAuth(request) {
+        const url = this.apiEndpoint + '/user/oauth';
         return await this.api.post(url, request);
     }
     

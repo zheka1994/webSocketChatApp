@@ -5,7 +5,12 @@
   },
   "app": {
     "oAuth": {
-      "clientId": "8144858"
+      "vk": {
+        "clientId": "8144858"
+      },
+      "google": {
+        "clientId": "196270314049-ukq003hc8b36180p51dpqlu47ephd9rt.apps.googleusercontent.com"
+      }
     }
   }
 }

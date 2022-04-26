@@ -24,8 +24,14 @@ export default function LoginPage() {
     }
     
     function onVkOAuthButtonClick() {
-        const redirectUri = `${getCurrentRoot()}/oauth-redirect`;
+        const redirectUri = `${getCurrentRoot()}/oauth-redirect?auth_type=vk`;
         window.location = `https://oauth.vk.com/authorize?client_id=${OAUTH_VK_CLIENT_ID}&display=page&redirect_uri=${redirectUri}&scope=email&response_type=code&v=5.131`;
+    }
+
+    function onGoogleOAuthButtonClick() {
+        const redirectUri = `${getCurrentRoot()}/oauth-redirect?auth_type=google`;
+        const clientId = OAUTH_GOOGLE_CLIENT_ID;
+        window.location = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=openid%20profile%20email&response_type=code`;
     }
     
     function changeActiveTabNumber(activeTabNumber) {
@@ -129,18 +135,23 @@ export default function LoginPage() {
                         <button type="button" className="auth__button auth__button_jwt" onClick={onAuthButtonClick}>
                             Далее
                         </button>
-                        <button type="button" className="auth__button auth__button_vk" onClick={onVkOAuthButtonClick}>
-                            <div className="auth__button-container">
-                                <div className="auth__svg-container">
-                                    <svg width="100%" height="100%" viewBox="0 0 40 40" className="input__help-icon">
+                        <div className="auth__social">
+                            <div className="auth__social-title">
+                                Авторизоваться через:
+                            </div>
+                            <div className="auth__social-container">
+                                <div className="auth__svg-container auth__svg-container_vk" onClick={onVkOAuthButtonClick}>
+                                    <svg width="100%" height="100%" viewBox="0 0 24 24" className="input__help-icon">
                                         <use xlinkHref={`${Icons}#vk`}/>
                                     </svg>
                                 </div>
-                                <span className="auth__button-text-container">
-                                    Авторизоваться через Вконтакте
-                                </span>
+                                <div className="auth__svg-container auth__svg-container_google" onClick={onGoogleOAuthButtonClick}>
+                                    <svg width="100%" height="100%" viewBox="0 0 24 24" className="input__help-icon">
+                                        <use xlinkHref={`${Icons}#google`}/>
+                                    </svg>
+                                </div>
                             </div>
-                        </button>
+                        </div>
                     </FormBody>
                 </div>
             </main>

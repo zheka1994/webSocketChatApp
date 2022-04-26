@@ -57,6 +57,7 @@ namespace websocketChat.Api
             });
             services.Configure<OAuthOptions>(_configuration.GetSection("AppSettings:OAuthOptions"));
             services.Configure<VkAuthOptions>(_configuration.GetSection("AppSettings:OAuthOptions:VkAuthOptions"));
+            services.Configure<GoogleAuthOptions>(_configuration.GetSection("AppSettings:OAuthOptions:GoogleAuthOptions"));
             services.AddDbContext<ChatDbContext>(options => options
                 .UseNpgsql(dbConnectionString)
                 .UseSnakeCaseNamingConvention()

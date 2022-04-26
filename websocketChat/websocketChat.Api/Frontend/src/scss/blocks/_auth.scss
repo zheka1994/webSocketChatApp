@@ -40,14 +40,14 @@
         appearance: none;
         border: 0;
         border-radius: 5px;
-        
         color: white;
         padding-top: 10px;
         padding-bottom: 10px;
         text-align: center;
-        
+
         &_jwt {
             @include setAlpha(background, $violet, 0.8);
+
             &:hover {
                 cursor: pointer;
                 @include setAlpha(background, $violet, 1);
@@ -57,25 +57,44 @@
         &-container {
             display: flex;
         }
-        
-        &_vk {
-            @include setAlpha(background, $violet, 0.6);
-            &:hover {
-                cursor: pointer;
-                @include setAlpha(background, $violet, 0.8);
-            }
-        }
-        
+
         &-text-container {
             margin-left: 10px;
             align-self: center;
         }
-        
     }
-    
+
+    &__social {
+        margin-top: 10px;
+
+        &-title {
+            text-align: center;
+            font-size: 0.8em;
+        }
+
+        &-container {
+            display: flex;
+            margin-top: 10px;
+            justify-content: center;
+        }
+    }
+
     &__svg-container {
         width: 30px;
         height: 30px;
+
+        &:hover:after {
+            display: block;
+            font-size: 0.8em;
+        }
+
+        &_vk:hover:after {
+            content: "Вконтакте"
+        }
+
+        &_google:hover:after {
+            content: "Google"
+        }
     }
 
     &__label {

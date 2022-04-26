@@ -31,23 +31,11 @@ namespace websocketChat.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPost("oauth/vk")]
-        public async Task<IActionResult> OAuthAuthorize([FromBody] OAuthRequest request)
+        [HttpPost("oauth")]
+        public async Task<IActionResult> VkAuthorize([FromBody] OAuthRequest request)
         {
             var result = await _userService.OAuthorize(request);
             return Ok(result);
-        }
-
-        [HttpGet("userInformation")]
-        public IActionResult UserInformation(string returnUrl)
-        {
-            return Ok();
-        }
-        
-        [HttpGet("callback")]
-        public IActionResult Callback(string returnUrl)
-        {
-            return Ok();
         }
     }
 }

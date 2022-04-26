@@ -9,7 +9,7 @@ export default function OAuthRedirectPage() {
     useEffect(async () => {
         try {
             const api = new ApiMethods();
-            const result = await api.vkOAuth(buildOAuthRequest());
+            const result = await api.oAuth(buildOAuthRequest());
             console.log(result);
             navigate('/chat');
         }

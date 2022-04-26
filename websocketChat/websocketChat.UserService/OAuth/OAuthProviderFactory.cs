@@ -13,6 +13,8 @@ namespace websocketChat.UserService.OAuth
             {
                 case AuthType.Vk:
                     return new VkOAuthProvider.VkOAuthProvider(oAuthOptions.VkAuthOptions, repository, jwtOptions);
+                case AuthType.Google:
+                    return new GoogleOAuthProvider.GoogleOAuthProvider();
                 default:
                     throw new UserServiceException($"Неверный тип поставщика авторизации {type}");
             }
