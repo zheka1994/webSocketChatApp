@@ -11,5 +11,7 @@ namespace websocketChat.Core.Models
         public string ClientId { get; set; }
         public string ClientSecret { get; set; }
         public string ApiSecret { get; set; }
+        public string TokenEndpoint { get; set; }
+        public string MethodsBaseEndpoint { get; set; }
     }
 }

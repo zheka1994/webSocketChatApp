@@ -32,7 +32,7 @@ namespace websocketChat.Api.Controllers
         }
 
         [HttpPost("oauth")]
-        public async Task<IActionResult> VkAuthorize([FromBody] OAuthRequest request)
+        public async Task<IActionResult> OAuthAuthorize([FromBody] OAuthRequest request)
         {
             var result = await _userService.OAuthorize(request);
             return Ok(result);
