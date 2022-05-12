@@ -45,19 +45,6 @@ namespace websocketChat.Api.Internal
                         ClockSkew = expirationTimeHours
                     };
                 });
-            /* .AddOAuth("vkOauth", options =>
-            {
-                var vkAuthOptionsSection = configuration
-                    .GetSection("AppSettings")
-                    ?.GetSection("VkAuthOptions");
-                options.AuthorizationEndpoint = vkAuthOptionsSection?.GetSection("AuthorizationEndpoint").Value!;
-                options.ClientId = vkAuthOptionsSection?.GetSection("ClientId").Value!;
-                options.TokenEndpoint = vkAuthOptionsSection?.GetSection("TokenEndpoint").Value!;
-                options.ClientSecret = vkAuthOptionsSection?.GetSection("ClientSecret").Value!;
-                options.UserInformationEndpoint = "/api/v1/user/userInformation";
-                options.CallbackPath = "/api/v1/user/callback";
-                options.Scope.Add("email");
-            }); */
         }
     }
 }

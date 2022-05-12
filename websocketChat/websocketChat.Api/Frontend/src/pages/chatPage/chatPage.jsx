@@ -1,6 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { io } from 'socket.io-client';
+import { restoreFromLocalStorage } from '../../core/utils/localStorageExtensions';
 
-export default function ChatPage(props) {
+import avatar from '../../img/jpg/avatar.jpg'; // for testing avatar
+import Icons from '../../img/svg/icons-sprite.svg';
+import * as chatPageActions from './chatPageActions';
+
+
+export default function ChatPage() {
+    const chat = useSelector(store => store.chat);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (!chat?.token) {
+            const token = restoreFromLocalStorage('TOKEN');
+            dispatch(chatPageActions.setToken(token));
+        }
+    }, [chat]);
+
+    useEffect(() => {
+        if (chat?.token) {
+            io('http://localhost:5000/ws', {
+                auth: {
+                    token: chat.token
+                },
+            });
+        }
+    }, [chat?.token]);
+
     return (
         <div className="container">
             <aside className="friends">
@@ -11,7 +39,7 @@ export default function ChatPage(props) {
                 <ul className="friends__list">
                     <li className="friends__list-item friends__list-item_online">
                         <figure className="avatar">
-                            <img className="avatar__img" src="img/jpg/avatar.jpg" alt="avatar"/>
+                            <img className="avatar__img" src={avatar} alt="avatar"/>
                             <figcaption className="avatar__caption">
                                 Orlando Diggs
                             </figcaption>
@@ -19,7 +47,7 @@ export default function ChatPage(props) {
                     </li>
                     <li className="friends__list-item friends__list-item_online">
                         <figure className="avatar">
-                            <img className="avatar__img" src="img/jpg/avatar.jpg" alt="avatar"/>
+                            <img className="avatar__img" src={avatar} alt="avatar"/>
                             <figcaption className="avatar__caption">
                                 Orlando Diggs
                             </figcaption>
@@ -27,7 +55,7 @@ export default function ChatPage(props) {
                     </li>
                     <li className="friends__list-item friends__list-item_online">
                         <figure className="avatar">
-                            <img className="avatar__img" src="img/jpg/avatar.jpg" alt="avatar"/>
+                            <img className="avatar__img" src={avatar} alt="avatar"/>
                             <figcaption className="avatar__caption">
                                 Orlando Diggs
                             </figcaption>
@@ -35,7 +63,7 @@ export default function ChatPage(props) {
                     </li>
                     <li className="friends__list-item friends__list-item_offline">
                         <figure className="avatar">
-                            <img className="avatar__img" src="img/jpg/avatar.jpg" alt="avatar"/>
+                            <img className="avatar__img" src={avatar} alt="avatar"/>
                             <figcaption className="avatar__caption">
                                 Orlando Diggs
                             </figcaption>
@@ -43,7 +71,7 @@ export default function ChatPage(props) {
                     </li>
                     <li className="friends__list-item friends__list-item_offline">
                         <figure className="avatar">
-                            <img className="avatar__img" src="img/jpg/avatar.jpg" alt="avatar"/>
+                            <img className="avatar__img" src={avatar} alt="avatar"/>
                             <figcaption className="avatar__caption">
                                 Orlando Diggs
                             </figcaption>
@@ -51,7 +79,7 @@ export default function ChatPage(props) {
                     </li>
                     <li className="friends__list-item friends__list-item_online">
                         <figure className="avatar">
-                            <img className="avatar__img" src="img/jpg/avatar.jpg" alt="avatar"/>
+                            <img className="avatar__img" src={avatar} alt="avatar"/>
                             <figcaption className="avatar__caption">
                                 Orlando Diggs
                             </figcaption>
@@ -66,14 +94,14 @@ export default function ChatPage(props) {
                         Orlando Diggs
                     </span>
                         <svg className="dialog__star">
-                            <use xlinkHref="img/svg/icons-sprite.svg#star"></use>
+                            <use xlinkHref={`${Icons}#star`}></use>
                         </svg>
                     </div>
                     <div className="dialog__menu">
                         <div className="input">
                             <input className="input__control" type="text" placeholder="Search..."/>
                             <svg className="input__icon">
-                                <use xlinkHref="img/svg/icons-sprite.svg#search"/>
+                                <use xlinkHref={`${Icons}#search`} />
                             </svg>
                         </div>
                     </div>
@@ -83,7 +111,7 @@ export default function ChatPage(props) {
                     <div className="message-list">
                         <div className="message-list__item">
                             <figure className="avatar">
-                                <img className="avatar__img" src="img/jpg/avatar.jpg" alt="avatar"/>
+                                <img className="avatar__img" src={avatar} alt="avatar"/>
                             </figure>
                             <div className="message-content">
                                 <div className="message-content__header">
@@ -107,7 +135,7 @@ export default function ChatPage(props) {
                         </div>
                         <div className="message-list__item">
                             <figure className="avatar">
-                                <img className="avatar__img" src="img/jpg/avatar.jpg" alt="avatar"/>
+                                <img className="avatar__img" src={avatar} alt="avatar"/>
                             </figure>
                             <div className="message-content">
                                 <div className="message-content__header">
@@ -128,7 +156,7 @@ export default function ChatPage(props) {
                         </div>
                         <div className="message-list__item">
                             <figure className="avatar">
-                                <img className="avatar__img" src="img/jpg/avatar.jpg" alt="avatar"/>
+                                <img className="avatar__img" src={avatar} alt="avatar"/>
                             </figure>
                             <div className="message-content">
                                 <div className="message-content__header">
@@ -146,7 +174,7 @@ export default function ChatPage(props) {
                         </div>
                         <div className="message-list__item">
                             <figure className="avatar">
-                                <img className="avatar__img" src="img/jpg/avatar.jpg" alt="avatar"/>
+                                <img className="avatar__img" src={avatar} alt="avatar"/>
                             </figure>
                             <div className="message-content">
                                 <div className="message-content__header">
@@ -161,13 +189,13 @@ export default function ChatPage(props) {
                                     Good news, bro!!
                                 </p>
                                 <figure className="message-content__picture">
-                                    <img className="message-content__image" src="img/jpg/avatar.jpg" alt="image"/>
+                                    <img className="message-content__image" src={avatar} alt="image"/>
                                 </figure>
                             </div>
                         </div>
                         <div className="message-list__item">
                             <figure className="avatar">
-                                <img className="avatar__img" src="img/jpg/avatar.jpg" alt="avatar"/>
+                                <img className="avatar__img" src={avatar} alt="avatar"/>
                             </figure>
                             <div className="message-content">
                                 <div className="message-content__header">
@@ -192,17 +220,17 @@ export default function ChatPage(props) {
                 <div className="delimiter"/>
                 <section className="dialog__footer">
                     <svg className="clip">
-                        <use xlinkHref="img/svg/icons-sprite.svg#clip"/>
+                        <use xlinkHref={`${Icons}#clip`} />
                     </svg>
                     <svg className="microphone">
-                        <use xlinkHref="img/svg/icons-sprite.svg#microphone"/>
+                        <use xlinkHref={`${Icons}#microphone`} />
                     </svg>
                     <textarea className="dialog__comment comment" placeholder="Enter message"/>
                 </section>
             </main>
             <aside className="current-friend">
                 <figure>
-                    <img src="img/jpg/avatar.jpg" alt="friend" className="current-friend__avatar"/>
+                    <img src={avatar} alt="friend" className="current-friend__avatar"/>
                     <figcaption>
                         <div className="current-friend__name">
                             Eugen Guziy
@@ -216,22 +244,22 @@ export default function ChatPage(props) {
                     <section className="social">
                     <span className="social__icon">
                         <svg className="facebook">
-                            <use xlinkHref="img/svg/icons-sprite.svg#facebook"></use>
+                            <use xlinkHref={`${Icons}#facebook`}></use>
                         </svg>      
                     </span>
                         <span className="social__icon">
                         <svg className="twitter">
-                            <use xlinkHref="img/svg/icons-sprite.svg#twitter"></use>
+                            <use xlinkHref={`${Icons}#twitter`}></use>
                         </svg>   
                     </span>
                         <span className="social__icon">
                         <svg className="instagramm">
-                            <use xlinkHref="img/svg/icons-sprite.svg#instagramm"></use>
+                            <use xlinkHref={`${Icons}#instagramm`}></use>
                         </svg>
                     </span>
                         <span className="social__icon">
                         <svg className="linked-in">
-                            <use xlinkHref="img/svg/icons-sprite.svg#linked-in"></use>
+                            <use xlinkHref={`${Icons}#linked-in`}></use>
                         </svg>   
                     </span>
                     </section>

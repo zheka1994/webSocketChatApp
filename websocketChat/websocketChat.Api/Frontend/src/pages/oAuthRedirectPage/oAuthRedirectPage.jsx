@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ApiMethods from "../../core/api/apiMethods";
+import { saveToLocalStorage } from '../../core/utils/localStorageExtensions';
 import { buildOAuthRequest } from './business/apiRequestBuilder';
 
 export default function OAuthRedirectPage() {
@@ -10,7 +11,7 @@ export default function OAuthRedirectPage() {
         try {
             const api = new ApiMethods();
             const result = await api.oAuth(buildOAuthRequest());
-            console.log(result);
+            saveToLocalStorage('TOKEN', result.token);
             navigate('/chat');
         }
         catch (ex) {

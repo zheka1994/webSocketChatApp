@@ -1,0 +1,1 @@
+export const SET_TOKEN = 'chat_page__set_token';

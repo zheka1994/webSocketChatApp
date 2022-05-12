@@ -66,6 +66,23 @@ namespace websocketChat.Data.Migrations
                 {
                     table.PrimaryKey("PK_Parties", x => x.ID);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
+                    Email = table.Column<string>(type: "text", nullable: true),
+                    PwdHash = table.Column<string>(type: "text", nullable: true),
+                    PwdSalt = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.ID);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -81,6 +98,9 @@ namespace websocketChat.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Parties");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

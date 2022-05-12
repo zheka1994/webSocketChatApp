@@ -19,8 +19,7 @@ const buildConfig = {
     output: {
         filename: '[name][contenthash].js',
         path: outputPath,
-        publicPath: config.build.publicPath,
-        clean: true
+        publicPath: config.build.publicPath
     },
     module: {
         rules: [
@@ -54,7 +53,7 @@ const buildConfig = {
                 ],
             },
             {
-                test: /\.(png|jpeg|gif|svg|ttf)$/i,
+                test: /\.(png|jpe?g|gif|svg|ttf|woff)$/i,
                 type:  'asset/resource'
             },
         ],

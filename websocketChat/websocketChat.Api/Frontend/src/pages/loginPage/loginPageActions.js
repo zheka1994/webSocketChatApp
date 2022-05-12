@@ -53,17 +53,3 @@ export function setFormValidationResult(data) {
         data
     }
 }
-
-export function setAuthResponse(data) {
-    return {
-        type: loginPageActionTypes.SET_AUTH_RESPONSE,
-        data
-    };
-}
-
-export function setRegisterResponse(data) {
-    return {
-        type: loginPageActionTypes.SET_REGISTER_RESPONSE,
-        data
-    };
-}

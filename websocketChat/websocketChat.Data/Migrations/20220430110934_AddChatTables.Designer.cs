@@ -10,7 +10,7 @@ using websocketChat.Data;
 namespace websocketChat.Data.Migrations
 {
     [DbContext(typeof(ChatDbContext))]
-    [Migration("20220428191030_AddChatTables")]
+    [Migration("20220430110934_AddChatTables")]
     partial class AddChatTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

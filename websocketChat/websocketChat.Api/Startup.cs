@@ -60,7 +60,7 @@ namespace websocketChat.Api
             services.Configure<GoogleAuthOptions>(_configuration.GetSection("AppSettings:OAuthOptions:GoogleAuthOptions"));
             services.AddDbContext<ChatDbContext>(options => options
                 .UseNpgsql(dbConnectionString)
-                .UseSnakeCaseNamingConvention()
+                // .UseSnakeCaseNamingConvention()
                 .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
                 .EnableSensitiveDataLogging());
             services.AddAuthenticationServices(_configuration);
@@ -94,6 +94,7 @@ namespace websocketChat.Api
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseWebSockets();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}");

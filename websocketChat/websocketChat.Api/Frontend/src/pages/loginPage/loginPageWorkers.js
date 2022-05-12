@@ -1,19 +1,20 @@
-import {call, put, select} from "redux-saga/effects";
-import ApiMethods from "../../core/api/apiMethods";
-import * as apiRequestBuilder from "./business/apiRequestBuilder";
-import * as loginPageActions from "./loginPageActions";
-import * as validator from "./business/formValidation";
+import {call, put, select} from 'redux-saga/effects';
+import ApiMethods from '../../core/api/apiMethods';
+import * as apiRequestBuilder from './business/apiRequestBuilder';
+import * as loginPageActions from './loginPageActions';
+import * as validator from './business/formValidation';
+import { saveToLocalStorage } from '../../core/utils/localStorageExtensions';
 
 export function* authUserWorker() {
     const {login} = yield select();
     const response = yield call(authUser, login);
-    yield put(loginPageActions.setAuthResponse(response));
+    saveToLocalStorage('TOKEN', reponse.token);
 }
 
 export function* registerUserWorker() {
     const {login} = yield select();
     const response = yield call(registerUser, login);
-    yield put(loginPageActions.setRegisterResponse(response));
+    saveToLocalStorage('TOKEN', reponse.token);
 }
 
 async function authUser(login) {
