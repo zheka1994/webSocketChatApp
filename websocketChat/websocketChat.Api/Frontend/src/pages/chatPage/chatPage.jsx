@@ -21,10 +21,19 @@ export default function ChatPage() {
 
     useEffect(() => {
         if (chat?.token) {
-            io('http://localhost:5000/ws', {
-                auth: {
+            console.log("token", chat.token);
+            const socket = io(`ws://${window.location.host}`, {
+                path: '/ws',
+                query: {
                     token: chat.token
                 },
+                withCredentials: true,
+                transports: [
+                    'websocket'
+                ]
+            });
+            socket.on('connect', () => {
+                console.log('CONNECTED');
             });
         }
     }, [chat?.token]);
