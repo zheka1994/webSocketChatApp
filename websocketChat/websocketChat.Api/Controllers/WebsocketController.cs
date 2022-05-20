@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Net.WebSockets;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using websocketChat.Core;
 using websocketChat.Core.Authorization;
@@ -46,13 +49,16 @@ namespace websocketChat.Api.Controllers
 
             if (HttpContext.WebSockets.IsWebSocketRequest)
             {
+                // Устанавливаем соединение
                 var webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
-                _webSocketService.AddConnection(webSocket, new UserIdentity
+                var user = new UserIdentity
                 {
                     Name = name.Value,
                     PhoneNumber = phone.Value,
                     Email = email.Value
-                });
+                };
+                // Слушаем порт
+                await _webSocketService.ListenChannel(user, webSocket);
             }
             else
             {

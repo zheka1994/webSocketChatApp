@@ -7,15 +7,17 @@ using System.Threading.Tasks;
 
 namespace websocketChat.WebsocketService.Models
 {
-    public class WebsocketConnection : IEquatable<WebsocketConnection>
+    public class WebsocketConnection
     {
         private readonly Guid _id;
         private readonly WebSocket _webSocket;
 
-        public WebsocketConnection(WebSocket webSocket)
+        public WebSocket Socket
         {
-            _webSocket = webSocket;
-            _id = Guid.NewGuid();
+            get
+            {
+                return _webSocket;
+            }
         }
 
         public Guid Id
@@ -26,9 +28,10 @@ namespace websocketChat.WebsocketService.Models
             }
         }
 
-        public bool Equals(WebsocketConnection other)
+        public WebsocketConnection(WebSocket webSocket)
         {
-            return Id == other.Id;
+            _webSocket = webSocket;
+            _id = Guid.NewGuid();
         }
     }
 }

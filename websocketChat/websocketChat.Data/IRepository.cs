@@ -1,10 +1,11 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using websocketChat.Data.Models;
 
 namespace websocketChat.Data
 {
-    public interface IRepository
+    public interface IRepository : IDisposable
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Chat> Chats { get; set; }

@@ -11,5 +11,9 @@ namespace websocketChat.Data.Models
         public int ID { get; set; }
         public string Name { get; set; }
         public int UserId { get; set; }
+        
+        public User User { get; set; }
+        public ICollection<Message> Messages { get; set; }
+        public ICollection<Party> Parties { get; set; }
     }
 }

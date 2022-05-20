@@ -16,5 +16,8 @@ namespace websocketChat.Data.Models
         public int UserID { get; set; }
         public string Content { get; set; }
         public DateTime CreateDate { get; set; }
+        public Chat Chat { get; set; }
+        public User User { get; set; }
+        public ICollection<MessageStatus> MessageStatuses { get; set; }
     }
 }

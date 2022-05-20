@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { io } from 'socket.io-client';
+// import { io } from 'socket.io-client';
 import { restoreFromLocalStorage } from '../../core/utils/localStorageExtensions';
+import WebSocketClient from '../../core/websocketClient/webSocketClient';
 
 import avatar from '../../img/jpg/avatar.jpg'; // for testing avatar
 import Icons from '../../img/svg/icons-sprite.svg';
@@ -11,6 +12,10 @@ import * as chatPageActions from './chatPageActions';
 export default function ChatPage() {
     const chat = useSelector(store => store.chat);
     const dispatch = useDispatch();
+
+    function onWebSocketConnectionOpen() {
+
+    }
 
     useEffect(() => {
         if (!chat?.token) {
@@ -22,7 +27,27 @@ export default function ChatPage() {
     useEffect(() => {
         if (chat?.token) {
             console.log("token", chat.token);
-            const socket = io(`ws://${window.location.host}`, {
+            const socketClient = new WebSocketClient({
+                url: `ws://${window.location.host}/ws`,
+                query: {
+                    token: chat.token
+                },
+                needConsoleLogging: true,
+                reconnectTimeout: 500,
+                onOpen: () => {
+                    socketClient.send(JSON.stringify({
+                        type: "userMessage",
+                        message: "Hello Eugen",
+                        receiver: {
+                            name: "zheka",
+                            phoneNumber: "+79687987001",
+                            email: "zhenya.guziy@gmail.com"
+                        }
+                    }));
+                }
+            });
+            socketClient.connect();
+            /* const socket = io(`ws://${window.location.host}`, {
                 path: '/ws',
                 query: {
                     token: chat.token
@@ -34,7 +59,7 @@ export default function ChatPage() {
             });
             socket.on('connect', () => {
                 console.log('CONNECTED');
-            });
+            }); */
         }
     }, [chat?.token]);
 

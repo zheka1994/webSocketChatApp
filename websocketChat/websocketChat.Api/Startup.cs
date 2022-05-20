@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using StackExchange.Redis;
 using websocketChat.Api.Internal;
 using websocketChat.Api.Internal.Filters;
 using websocketChat.Api.Internal.Validation;
@@ -41,6 +43,11 @@ namespace websocketChat.Api
                 ?.GetSection("ConnectionStrings")
                 ?.GetSection("Db")
                 ?.Value ?? "";
+            string redisConnectionString = _configuration
+                .GetSection("AppSettings")
+                ?.GetSection("ConnectionStrings")
+                ?.GetSection("Redis")
+                ?.Value ?? "";
             services.AddOptions();
             services.Configure<JwtOptions>(options =>
             {
@@ -63,6 +70,8 @@ namespace websocketChat.Api
                 // .UseSnakeCaseNamingConvention()
                 .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
                 .EnableSensitiveDataLogging());
+            services.AddSingleton<IConnectionMultiplexer>(options =>
+                ConnectionMultiplexer.Connect(redisConnectionString)); 
             services.AddAuthenticationServices(_configuration);
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddControllersWithViews(options =>
@@ -94,7 +103,10 @@ namespace websocketChat.Api
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseWebSockets();
+            app.UseWebSockets(new WebSocketOptions
+            {
+                KeepAliveInterval = TimeSpan.FromSeconds(120)
+            });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}");

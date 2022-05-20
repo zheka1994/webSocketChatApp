@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace websocketChat.Data.Models
 {
     public class User
@@ -8,5 +10,9 @@ namespace websocketChat.Data.Models
         public string Email { get; set; }
         public string PwdHash { get; set; }
         public string PwdSalt { get; set; }
+        public ICollection<Chat> Chats { get; set; }
+        public ICollection<Message> Messages { get; set; }
+        public ICollection<MessageStatus> MessageStatuses { get; set; }
+        public ICollection<Party> Parties { get; set; }
     }
 }

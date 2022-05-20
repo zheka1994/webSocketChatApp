@@ -15,5 +15,7 @@ namespace websocketChat.Data.Models
         public int UserID { get; set; }
         public int MessageID { get; set; }
         public int Status { get; set; }
+        public User User { get; set; }
+        public Message Message { get; set; }
     }
 }

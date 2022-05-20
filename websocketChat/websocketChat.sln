@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "websocketChat.UserService",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "websocketChat.Core", "websocketChat.Core\websocketChat.Core.csproj", "{B593ED4A-DB75-4776-8373-1A0F509C6FA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "websocketChat.WebsocketService", "websocketChat.WebsocketService\websocketChat.WebsocketService.csproj", "{9C110A8D-E615-4412-AD58-2EF091E24FF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "websocketChat.WebsocketService", "websocketChat.WebsocketService\websocketChat.WebsocketService.csproj", "{9C110A8D-E615-4412-AD58-2EF091E24FF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
