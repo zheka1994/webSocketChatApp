@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,8 +14,10 @@ using websocketChat.Core.Models;
 using websocketChat.Data;
 using websocketChat.Data.Models;
 using websocketChat.UserService.Exceptions;
+using websocketChat.UserService.Internal;
 using websocketChat.UserService.Models;
 using websocketChat.UserService.Models.Enums;
+using websocketChat.UserService.Models.Mapper;
 using websocketChat.UserService.OAuth;
 
 namespace websocketChat.UserService
@@ -89,6 +93,63 @@ namespace websocketChat.UserService
             {
                 Token = token
             };
+        }
+
+        public async Task<UserInfo> GetUserInfo(string name, string phoneNumber)
+        {
+            var userData = await _repository.Users
+                .Include(u => u.Chats)
+                    .ThenInclude(c => c.Parties)
+                .Include(u => u.Chats)
+                    .ThenInclude(c => c.Messages)
+                    .ThenInclude(m => m.User)
+                .Include(u => u.Chats)
+                    .ThenInclude(c => c.User)
+                .SingleOrDefaultAsync(u => u.Name == name
+                                && u.PhoneNumber == phoneNumber);
+            var userFriends = await _repository.Friends.Where(f => f.FriendOneId == userData.ID)
+                .Join(_repository.Users,
+                    f => f.FriendTwoId,
+                    u => u.ID,
+                    (f, u) => new
+                    {
+                        u.Name,
+                        u.Email,
+                        u.PhoneNumber,
+                        f.Status
+                    })
+                .ToListAsync();
+            var result = new UserInfo {
+                User = userData.TransformToDto(),
+                Friends = userFriends.Select(uf => new Models.Friend
+                {
+                    Name = uf.Name,
+                    Email = uf.Email,
+                    PhoneNumber = uf.PhoneNumber,
+                    Status = uf.Status
+                }).ToList(),
+                Chats = userData.Chats.Select(c => new Models.Chat
+                {
+                    Creator = c.User.TransformToDto(),
+                    Name = c.Name,
+                    Messages = c.Messages.Select(m => new Models.Message
+                    {
+                        Content = m.Content,
+                        CreateDate = m.CreateDate,
+                        User = m.User.TransformToDto()
+                    }).ToList(),
+                    Parties = c.Parties.Select(p => p.User.TransformToDto()).ToList()
+                }).ToList(),
+            };
+            return result;
+        }
+
+        // TODO сделать через кеширование redis (пока через БД)
+        public async Task<List<UserDto>> FindFriends(string query)
+        {
+            var userAutoComplete = new UserAutoComplete(_repository);
+            var result = await userAutoComplete.GetUserSuggestions(query);
+            return result;
         }
 
         private async Task<bool> IsUserAlreadyExists(RegisterRequest request)

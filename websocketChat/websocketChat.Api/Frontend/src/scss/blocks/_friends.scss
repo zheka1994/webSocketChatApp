@@ -13,6 +13,10 @@
         display: flex;
         justify-content: space-between;
     }
+
+    &__search {
+        margin-top: 20px;
+    }
     
     &__title {
         text-transform: uppercase;

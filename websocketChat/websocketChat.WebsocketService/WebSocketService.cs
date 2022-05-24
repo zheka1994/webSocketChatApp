@@ -92,7 +92,7 @@ namespace websocketChat.WebsocketService
 
                 if (user == null)
                 {
-                    throw new Exception("Такого пользователя не существует");
+                    return;
                 }
 
                 MessageBase channelMessage = new UserMessage

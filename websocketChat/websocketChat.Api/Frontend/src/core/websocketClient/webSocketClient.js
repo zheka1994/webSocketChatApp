@@ -32,6 +32,7 @@
         this.ws.onopen = this.onOpen;
         this.ws.onerror = this.onError;
         this.ws.onclose = this.onClose;
+        this.ws.onmessage = this.onMessage;
     }
 
     reconnect = () => {
@@ -47,6 +48,12 @@
         
         if (typeof this.options?.onOpen === "function") {
             this.options.onOpen();
+        }
+    }
+
+    onMessage = (event) => {
+        if (typeof this.options?.onMessage === "function") {
+            this.options.onMessage(event);
         }
     }
 

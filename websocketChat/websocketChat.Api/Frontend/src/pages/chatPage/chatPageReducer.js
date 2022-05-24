@@ -6,6 +6,24 @@ export default function chat(state = {}, action) {
             return {
                 ...state,
                 token: action.data
+            };
+        }
+        case chatPageActionTypes.SET_USER_INFO: {
+            return {
+                ...state,
+                userInfo: action.data
+            };
+        }
+        case chatPageActionTypes.CHANGE_NEW_FRIEND_SEARCH_QUERY: {
+            return {
+                ...state,
+                newFriendSearchQuery: action.data
+            }
+        }
+        case chatPageActionTypes.SET_SUGGEST_FRIENDS: {
+            return {
+                ...state,
+                suggestFriends: action.data
             }
         }
         default:

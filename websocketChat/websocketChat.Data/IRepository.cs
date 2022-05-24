@@ -12,6 +12,7 @@ namespace websocketChat.Data
         public DbSet<Message> Messages { get; set; }
         public DbSet<MessageStatus> MessageStatuses { get; set; }
         public DbSet<Party> Parties { get; set; }
+        public DbSet<Friend> Friends { get; set; }
         public Task SaveChangesAsync();
     }
 }

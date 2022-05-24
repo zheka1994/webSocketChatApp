@@ -11,10 +11,12 @@
 
 import { all } from 'redux-saga/effects';
 import loginPageWatcher from '../pages/loginPage/loginPageWatcher';
+import chatPageWatcher from '../pages/chatPage/chatPageWatcher';
 
 
 export default function* appSaga() {
     yield all([
-        ...loginPageWatcher
+        ...loginPageWatcher,
+        ...chatPageWatcher
     ]);
 }

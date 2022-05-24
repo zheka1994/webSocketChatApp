@@ -5,13 +5,13 @@ export default class Api {
         this.apiEndpoint = settings.apiEndpoint;
     }
     
-    async get(url, options) {
-       const result = await axios.get(url, options = {});
+    async get(url, options = {}) {
+       const result = await axios.get(url, options);
        return result.data;
     }
     
-    async post(url, data, options) {
-       const result = await axios.post(url, data, options = {});
+    async post(url, data, options = {}) {
+       const result = await axios.post(url, data, options);
        return result.data;
     }
 }

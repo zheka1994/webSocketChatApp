@@ -22,4 +22,23 @@ export default class ApiMethods {
         const url = this.apiEndpoint + '/user/register';
         return await this.api.post(url, request);
     }
+
+    async getUserInfo(token) {
+        const url = this.apiEndpoint + '/user/info';
+        return await this.api.get(url, {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        });
+    }
+
+    async findNewFriends(token, query) {
+        query = encodeURIComponent(query);
+        const url = this.apiEndpoint + '/user/friends/new' + `?q=${query}`;
+        return await this.api.get(url, {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        });
+    }
 }
