@@ -15,7 +15,8 @@ namespace websocketChat.UserService.Models.Mapper
             {
                 Name = user.Name,
                 Email = user.Email,
-                PhoneNumber = user.PhoneNumber
+                PhoneNumber = user.PhoneNumber,
+                AvatarUri = user.AvatarUri
             };
         }
     }

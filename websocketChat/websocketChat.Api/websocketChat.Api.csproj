@@ -14,10 +14,7 @@
     </Target>
 
     <ItemGroup>
-      <Content Include="Frontend\src\img\.DS_Store" />
-    </ItemGroup>
-
-    <ItemGroup>
+      <Folder Include="Frontend\src\img\jpg\" />
       <Folder Include="Frontend\src\img\png" />
       <Folder Include="Frontend\src\views\" />
       <Folder Include="Static" />

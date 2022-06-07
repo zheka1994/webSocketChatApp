@@ -3,9 +3,40 @@
     background: linear-gradient(180deg, rgba(207,207,215,1) 9%, rgba(159,170,169,1) 100%);
 
     &__avatar {
-        $width: 100%;
-        width: 100%;
-        height: $width;
+        $size: 100%;
+        width: $size;
+        height: $size;
+    }
+
+    &__avatar-text {
+        $size: 100px;
+        width: $size;
+        height: $size;
+        border-radius: 50%;
+        color: $white;
+        text-transform: uppercase;
+        font-size: 2em;
+        @include setAlpha(background, $violet, 0.4);
+        position: relative;
+        margin: auto;
+
+        &-inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            &:hover {
+                cursor: pointer;
+                @include setAlpha(color, $white, 0.6);
+            }
+
+            #files {
+                visibility: hidden;
+                width: 1px;
+                height: 1px;
+            }
+        }
     }
 
     &__name, &__desc {

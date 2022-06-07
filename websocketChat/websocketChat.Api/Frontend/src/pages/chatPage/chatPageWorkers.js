@@ -33,7 +33,7 @@ export function* findFriendsWorker() {
     const query = chat?.newFriendSearchQuery;
     const response = yield call(findNewFriends, token, query);
     if (response) {
-        yield put(chatPageActions.setSuggestFriends(response))
+        yield put(chatPageActions.setSuggestFriends(response));
     }
 }
 
@@ -41,6 +41,28 @@ async function findNewFriends(token, query) {
     const apiMethods = new ApiMethods();
     try {
         const response = await apiMethods.findNewFriends(token, query);
+        return response;
+    } catch (ex) {
+        console.log(ex);
+        return null;
+    }
+}
+
+export function* uploadAvatarWorker() {
+    const { chat } = yield select();
+    const avatarFile = chat?.userInfo?.user?.avatarFile;
+    const token = chat?.token;
+    const response = yield call(uploadAvatar, token, avatarFile);
+    if (response) {
+        yield put(chatPageActions.setAvatarUri(response.uri));
+    }
+}
+
+
+async function uploadAvatar(token, file) {
+    const apiMethods = new ApiMethods();
+    try {
+        const response = await apiMethods.uploadAvatar(token, file);
         return response;
     } catch (ex) {
         console.log(ex);

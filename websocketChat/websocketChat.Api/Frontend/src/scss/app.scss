@@ -41,6 +41,8 @@ body {
 @import './variables';
 @import './mixins';
 @import './blocks/container';
+@import './blocks/aside';
+@import './blocks/channels';
 @import './blocks/friends';
 @import './blocks/avatar';
 @import './blocks/dialog';
@@ -53,5 +55,6 @@ body {
 @import './blocks/social';
 @import './blocks/contacts';
 @import './blocks/auth';
+@import './blocks/modal';
 @import './blocks/tabs';
 @import './blocks/preloader';

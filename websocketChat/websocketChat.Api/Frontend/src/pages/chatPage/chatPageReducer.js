@@ -18,13 +18,49 @@ export default function chat(state = {}, action) {
             return {
                 ...state,
                 newFriendSearchQuery: action.data
-            }
+            };
         }
         case chatPageActionTypes.SET_SUGGEST_FRIENDS: {
             return {
                 ...state,
                 suggestFriends: action.data
-            }
+            };
+        }
+        case chatPageActionTypes.SHOW_CREATE_CHAT_MODAL_VISIBILITY: {
+            return {
+                ...state,
+                createChatModalVisible: true
+            };
+        }
+        case chatPageActionTypes.HIDE__CREATE_CHAT_MODAL_VISIBILITY: {
+            return {
+                ...state,
+                createChatModalVisible: false
+            };
+        };
+        case chatPageActionTypes.SET_AVATAR_FILE: {
+            return {
+                ...state,
+                userInfo: {
+                    ...state.userInfo,
+                    user: {
+                        ...state.userInfo.user,
+                        avatarFile: action.data
+                    }
+                }
+            };
+        }
+        case chatPageActionTypes.SET_AVATAR_URI: {
+            return {
+                ...state,
+                userInfo: {
+                    ...state.userInfo,
+                    user: {
+                        ...state.userInfo.user,
+                        avatarUri: action.data
+                    }
+                }
+            };
         }
         default:
             return state;

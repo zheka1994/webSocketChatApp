@@ -39,3 +39,35 @@ export function setSuggestFriends(data) {
         data
     };
 }
+
+export function showChatModalVisibility() {
+    return {
+        type: chatPageActionTypes.SHOW_CREATE_CHAT_MODAL_VISIBILITY
+    };
+}
+
+export function hideChatModalVisibility() {
+    return {
+        type: chatPageActionTypes.HIDE__CREATE_CHAT_MODAL_VISIBILITY
+    };
+}
+
+export function uploadAvatar() {
+    return {
+        type: chatPageActionTypes.UPLOAD_AVATAR_PHOTO
+    };
+}
+
+export function setAvatarFile(file) {
+    return {
+        type: chatPageActionTypes.SET_AVATAR_FILE,
+        data: file
+    };
+}
+
+export function setAvatarUri(data) {
+    return {
+        type: chatPageActionTypes.SET_AVATAR_URI,
+        data
+    };
+}

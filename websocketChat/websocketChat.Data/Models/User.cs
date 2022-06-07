@@ -11,6 +11,7 @@ namespace websocketChat.Data.Models
         public string Email { get; set; }
         public string PwdHash { get; set; }
         public string PwdSalt { get; set; }
+        public string AvatarUri { get; set; }
         public ICollection<Chat> Chats { get; set; }
         public ICollection<Message> Messages { get; set; }
         public ICollection<MessageStatus> MessageStatuses { get; set; }

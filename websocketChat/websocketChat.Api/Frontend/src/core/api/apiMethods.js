@@ -41,4 +41,16 @@ export default class ApiMethods {
             }
         });
     }
+
+    async uploadAvatar(token, data = {}) {
+        const url = this.apiEndpoint + '/user/avatar';
+        var formData = new FormData();
+        formData.append('avatar', data);
+        return await this.api.post(url, formData, {
+            headers: {
+                Authorization: 'Bearer ' + token,
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+    }
 }

@@ -1,21 +1,50 @@
 ﻿import React from 'react';
 import Icons from '../../../img/svg/icons-sprite.svg';
 
+import { getUserNameAbbreviation } from '../business/userNameBusiness';
+
 export default function UserProfile(props) {
-    const { user } = props;
+    const { user, setAvatarFile, uploadAvatar } = props;
+
+    function onChangeAvatar(event) {
+        const file = event.target.files[0];
+        setAvatarFile(file);
+        uploadAvatar();
+    }
+
+    function renderAvatar() {
+        if (user?.avatarUri) {
+            return (
+                <figure>
+                    <img src={user?.avatarUri} alt="friend" className="current-friend__avatar" />
+                    <figcaption>
+                        <div className="current-friend__name">
+                            {user?.name ?? ""}
+                        </div>
+                        <div className="current-friend__desc">
+                            {user?.about ?? ""}
+                        </div>
+                    </figcaption>
+                </figure>
+            );
+        }
+        return (
+            <div className="current-friend__avatar-text">
+                <div className="current-friend__avatar-text-inner">
+                    <label for="files">{getUserNameAbbreviation(user?.name)}</label>
+                    <input
+                        id="files"
+                        type="file"
+                        accept=".jpeg,.jpg,.webp"
+                        onChange={onChangeAvatar} />
+                </div>
+            </div>
+        );
+    }
+    
     return (
         <aside className="current-friend">
-            <figure>
-                <img src={""} alt="friend" className="current-friend__avatar" />
-                <figcaption>
-                    <div className="current-friend__name">
-                        {user?.name}
-                        </div>
-                    <div className="current-friend__desc">
-                        {user?.about ?? ""}
-                    </div>
-                </figcaption>
-            </figure>
+            {renderAvatar()}
             <div className="current-friend__container">
                 <section className="social">
                     <span className="social__icon">

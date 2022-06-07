@@ -1,6 +1,8 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using websocketChat.Core;
 using websocketChat.UserService;
 using websocketChat.UserService.Models;
 using websocketChat.UserService.Models.Enums;
@@ -12,6 +14,7 @@ namespace websocketChat.Api.Controllers
     public class UserController : Internal.ControllerBase
     {
         private readonly IUserService _userService;
+
 
         public UserController(IUserService userService)
         {
@@ -54,6 +57,26 @@ namespace websocketChat.Api.Controllers
         {
             var friends = await _userService.FindFriends(q);
             return Ok(friends);
+        }
+
+        [Authorize]
+        [HttpPost("avatar")]
+        [DisableRequestSizeLimit]
+        public async Task<IActionResult> UploadAvatar()
+        {
+            var file = Request.Form.Files[0];
+            var user = GetAuthUser();
+            string basePath = HttpContext.Request.Path;
+            var response = await _userService.UploadAvatar(file, basePath, user.Name, user.PhoneNumber);
+            return Ok(response);
+        }
+
+        [HttpGet("avatar/{filename}")]
+        [DisableRequestSizeLimit]
+        public async Task<FileResult> DownloadAvatar(string filename)
+        {
+            var stream = await Task.FromResult(_userService.DownloadAvatar(filename));
+            return File(stream, FileExtensions.GetMimeTypeByFileName(filename));
         }
     }
 }

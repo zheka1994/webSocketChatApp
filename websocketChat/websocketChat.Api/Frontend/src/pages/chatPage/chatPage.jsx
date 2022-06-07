@@ -2,10 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import WebSocketClient from '../../core/websocketClient/webSocketClient';
 
-import avatar from '../../img/jpg/avatar.jpg'; // for testing avatar
+//import avatar from '../../img/jpg/avatar.jpg'; // for testing avatar
 import Icons from '../../img/svg/icons-sprite.svg';
 import * as chatPageActions from './chatPageActions';
 import Channel from './components/channel';
+import CreateChatModal from './components/createChatModal/createChatModal';
 import Friends from './components/friends';
 import UserProfile from './components/userProfile';
 
@@ -63,9 +64,17 @@ export default function ChatPage() {
                 newFriendSearchQuery={chat?.newFriendSearchQuery ?? ''}
                 changeNewFriendSearchQuery={(value) => dispatch(chatPageActions.changeNewFriendSearchQuery(value))}
                 findNewFriends={() => dispatch(chatPageActions.findNewFriends())}
+                showChatModalVisibility={() => dispatch(chatPageActions.showChatModalVisibility())}
             />
             <Channel selectedChat={chat?.userInfo?.chats?.length ? chat?.userInfo?.chats[selectedChatIndex] : null} />
-            <UserProfile user={chat?.userInfo?.user} />
+            <UserProfile
+                user={chat?.userInfo?.user}
+                setAvatarFile={(file) => dispatch(chatPageActions.setAvatarFile(file))}
+                uploadAvatar={() => dispatch(chatPageActions.uploadAvatar())}/>
+            <CreateChatModal
+                visible={chat?.createChatModalVisible}
+                friends={chat?.userInfo?.friends}
+                hideChatModalVisibility={() => dispatch(chatPageActions.hideChatModalVisibility())}/>
         </div>
     )
 }

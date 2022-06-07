@@ -2,7 +2,7 @@
 import TextField from '../../../components/textField';
 
 export default function Friends(props) {
-    const { friends, suggestFriends, newFriendSearchQuery, changeNewFriendSearchQuery, findNewFriends } = props;
+    const { chats, friends, suggestFriends, newFriendSearchQuery, changeNewFriendSearchQuery, findNewFriends, showChatModalVisibility } = props;
 
     useEffect(() => {
         if (newFriendSearchQuery?.length > 3) {
@@ -14,20 +14,9 @@ export default function Friends(props) {
         changeNewFriendSearchQuery(event.target.value);
     }
 
-    function renderFriendsHeader() {
-        const title = suggestFriends?.length ? 'Возможные друзья' : 'Друзья';
-        const countFriends = suggestFriends?.length ? suggestFriends.length : friends?.length
+    function renderSearch() {
         return (
-            <div className="friends__header">
-                <span className="friends__title">{title}</span>
-                <span className="friends__count">{countFriends ?? 0}</span>
-            </div>
-        );
-    }
-
-    function renderFriendSearch() {
-        return (
-            <div className="friends__search">
+            <div className="aside__search">
                 <TextField
                     placeholder="Поиск..."
                     value={newFriendSearchQuery}
@@ -35,6 +24,48 @@ export default function Friends(props) {
                     icon="search" />
             </div>
         )
+    }
+
+    function renderChatsHeader() {
+        return (
+            <div className="channels__header">
+                <span className="channels__title">Чаты</span>
+                <span className="channels__count">{chats?.length ?? 0}</span>
+            </div>
+        );
+    }
+
+    function renderChatList(items) {
+        return items.map((chat, index) => (
+            <li key={`chat__${index}`} className="channels__list-item">
+                #{chat.name}
+            </li>
+        ));
+    }
+
+    function renderChats() {
+        if (!chats?.length) {
+            return null;
+        }
+
+        const items = suggestChats;
+
+        return (
+            <ul className="channels__list">
+                {renderChatList(items)}
+            </ul>
+        );
+    }
+
+    function renderFriendsHeader() {
+        const title = suggestFriends?.length ? 'Возможные друзья' : 'Друзья';
+        const countFriends = suggestFriends?.length ? suggestFriends.length : friends?.length;
+        return (
+            <div className="friends__header">
+                <span className="friends__title">{title}</span>
+                <span className="friends__count">{countFriends ?? 0}</span>
+            </div>
+        );
     }
 
     function renderFriendList(items) {
@@ -69,10 +100,26 @@ export default function Friends(props) {
     }
 
     return (
-        <aside className="friends">
-            {renderFriendsHeader()}
-            {renderFriendSearch()}
-            {renderFriends()}
+        <aside className="aside aside_left">
+            {renderSearch()}
+            <div className="channels">
+                {renderChatsHeader()}
+                {renderChats()}
+            </div>
+            <div className="friends">
+                {renderFriendsHeader()}
+                {renderFriends()}
+            </div>
+            <div className="aside__add">
+                <button
+                    type="button"
+                    className="aside__button aside__button_add"
+                    onClick={showChatModalVisibility}>
+                </button>
+                <span className="aside__add-title">
+                    Создать канал
+                </span>
+            </div>
         </aside>
     )
 

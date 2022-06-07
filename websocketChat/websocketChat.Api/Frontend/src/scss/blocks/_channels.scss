@@ -1,10 +1,5 @@
-.friends {
+﻿.channels {
     margin-top: 20px;
-
-    @include mobile-xs {
-        width: 100%;
-        flex-basis: 100%;
-    }
 
     &__header {
         display: flex;
@@ -25,12 +20,10 @@
     }
 
     &__list {
-        height: 100%;
-        overflow-y: scroll;
-
         &-item {
             list-style-type: none;
             position: relative;
+            border-radius: 5px;
 
             &_online:before, &_offline:before {
                 content: '';
@@ -56,8 +49,12 @@
                 margin-top: 20px;
             }
 
-            & + & {
-                margin-top: 10px;
+            padding: 5px 5px 5px 5px;
+
+            &:hover {
+                cursor: pointer;
+                background-color: rgb(142, 138, 138);
+                color: $white;
             }
         }
     }

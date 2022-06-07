@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -19,6 +21,7 @@ using websocketChat.UserService.Models;
 using websocketChat.UserService.Models.Enums;
 using websocketChat.UserService.Models.Mapper;
 using websocketChat.UserService.OAuth;
+using webSocketChat.StorageService;
 
 namespace websocketChat.UserService
 {
@@ -27,13 +30,15 @@ namespace websocketChat.UserService
         private readonly IRepository _repository;
         private readonly IOptions<JwtOptions> _jwtOptions;
         private readonly IOptions<OAuthOptions> _oAuthOptions;
+        private readonly IStorageService _storageService;
         private const int SaltLength = 8;
 
-        public UserService(IRepository repository, IOptions<JwtOptions> jwtOptions, IOptions<OAuthOptions> oAuthOptions)
+        public UserService(IRepository repository, IOptions<JwtOptions> jwtOptions, IOptions<OAuthOptions> oAuthOptions, IStorageService storageService)
         {
             _repository = repository;
             _jwtOptions = jwtOptions;
             _oAuthOptions = oAuthOptions;
+            _storageService = storageService;
         }
 
         public async Task<AuthResponse> Authorize(AuthRequest request)
@@ -147,9 +152,34 @@ namespace websocketChat.UserService
         // TODO сделать через кеширование redis (пока через БД)
         public async Task<List<UserDto>> FindFriends(string query)
         {
-            var userAutoComplete = new UserAutoComplete(_repository);
+            var userAutoComplete = new FriendsAutoComplete(_repository);
             var result = await userAutoComplete.GetUserSuggestions(query);
             return result;
+        }
+
+        public async Task<AvatarResponseDto> UploadAvatar(IFormFile file, string basePath, string name, string phoneNumber)
+        {
+            var user = await _repository.Users.FirstOrDefaultAsync(u => u.Name == name && u.PhoneNumber == phoneNumber);
+
+            if (user == null)
+            {
+                throw new Exception("Такого пользователя не существует");
+            }
+
+            var fileName = await _storageService.UploadFile(file);
+            var uri = $"{basePath}/{fileName}";
+            user.AvatarUri = uri;
+            await _repository.SaveChangesAsync();
+            return new AvatarResponseDto
+            {
+                Uri = uri
+            };
+        }
+
+        public Stream DownloadAvatar(string avatarFileName)
+        {
+            var stream = _storageService.DownloadFile(avatarFileName);
+            return stream;
         }
 
         private async Task<bool> IsUserAlreadyExists(RegisterRequest request)
