@@ -36,7 +36,6 @@ namespace webSocketChat.StorageService
 
         public Stream DownloadFile(string fileName)
         {
-            
             if (string.IsNullOrEmpty(fileName))
             {
                 throw new Exception("Не задано имя файла");

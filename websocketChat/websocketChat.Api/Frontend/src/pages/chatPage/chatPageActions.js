@@ -48,7 +48,7 @@ export function showChatModalVisibility() {
 
 export function hideChatModalVisibility() {
     return {
-        type: chatPageActionTypes.HIDE__CREATE_CHAT_MODAL_VISIBILITY
+        type: chatPageActionTypes.HIDE_CREATE_CHAT_MODAL_VISIBILITY
     };
 }
 
@@ -69,5 +69,17 @@ export function setAvatarUri(data) {
     return {
         type: chatPageActionTypes.SET_AVATAR_URI,
         data
+    };
+}
+
+export function showUserPhotoModalVisibility() {
+    return {
+        type: chatPageActionTypes.SHOW_USER_PHOTO_MODAL_VISIBILITY
+    };
+}
+
+export function hideUserPhotoModalVisibility() {
+    return {
+        type: chatPageActionTypes.HIDE_USER_PHOTO_MODAL_VISIBILITY
     };
 }

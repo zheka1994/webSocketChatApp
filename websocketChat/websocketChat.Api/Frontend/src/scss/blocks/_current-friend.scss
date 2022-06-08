@@ -6,6 +6,10 @@
         $size: 100%;
         width: $size;
         height: $size;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     &__avatar-text {

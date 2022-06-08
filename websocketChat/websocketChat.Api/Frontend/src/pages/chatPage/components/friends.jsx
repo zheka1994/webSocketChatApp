@@ -1,6 +1,8 @@
 ﻿import React, { useEffect } from 'react';
 import TextField from '../../../components/textField';
 
+import { getUserNameAbbreviation } from '../business/userNameBusiness';
+
 export default function Friends(props) {
     const { chats, friends, suggestFriends, newFriendSearchQuery, changeNewFriendSearchQuery, findNewFriends, showChatModalVisibility } = props;
 
@@ -68,15 +70,33 @@ export default function Friends(props) {
         );
     }
 
-    function renderFriendList(items) {
-        return items.map((friend, index) => (
-            <li key={`friend__${index}`} className="friends__list-item friends__list-item_online">
+    function renderFriendAvatar(friend) {
+        if (friend.avatarUri) {
+            return (
                 <figure className="avatar">
-                    <img className="avatar__img" src={""} alt="avatar" />
+                    <img className="avatar__img" src={friend.avatarUri} alt="avatar" />
                     <figcaption className="avatar__caption">
                         {friend.name}
                     </figcaption>
                 </figure>
+            );
+        }
+        return (
+            <div class="friends-text">
+                <div className="friends-text__logo">
+                    {getUserNameAbbreviation(friend.name)}
+                </div>
+                <span className="friends-text__desc">
+                    {friend.name}
+                </span>
+            </div>
+        );
+    }
+
+    function renderFriendList(items) {
+        return items.map((friend, index) => (
+            <li key={`friend__${index}`} className="friends__list-item friends__list-item_online">
+                {renderFriendAvatar(friend)}
             </li>
         ));
     }

@@ -8,6 +8,7 @@ import * as chatPageActions from './chatPageActions';
 import Channel from './components/channel';
 import CreateChatModal from './components/createChatModal/createChatModal';
 import Friends from './components/friends';
+import UserPhotoModal from './components/userPhotoModal';
 import UserProfile from './components/userProfile';
 
 
@@ -70,11 +71,16 @@ export default function ChatPage() {
             <UserProfile
                 user={chat?.userInfo?.user}
                 setAvatarFile={(file) => dispatch(chatPageActions.setAvatarFile(file))}
-                uploadAvatar={() => dispatch(chatPageActions.uploadAvatar())}/>
+                uploadAvatar={() => dispatch(chatPageActions.uploadAvatar())}
+                showUserPhotoModalVisibility={() => dispatch(chatPageActions.showUserPhotoModalVisibility())} />
             <CreateChatModal
                 visible={chat?.createChatModalVisible}
                 friends={chat?.userInfo?.friends}
-                hideChatModalVisibility={() => dispatch(chatPageActions.hideChatModalVisibility())}/>
+                hideChatModalVisibility={() => dispatch(chatPageActions.hideChatModalVisibility())} />
+            <UserPhotoModal
+                visible={chat?.userPhotoModalVisible}
+                avatarUri={chat?.userInfo?.user?.avatarUri}
+                hideUserPhotoModalVisibility={() => dispatch(chatPageActions.hideUserPhotoModalVisibility())} />
         </div>
     )
 }

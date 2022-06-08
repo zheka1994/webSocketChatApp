@@ -2,6 +2,7 @@ node_modules
 **/dist
 **/Static
 **/vs
+**/.vs
 .DS_Store
 *.swp
 *.*~

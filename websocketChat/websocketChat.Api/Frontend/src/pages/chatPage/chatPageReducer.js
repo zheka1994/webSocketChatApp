@@ -32,7 +32,7 @@ export default function chat(state = {}, action) {
                 createChatModalVisible: true
             };
         }
-        case chatPageActionTypes.HIDE__CREATE_CHAT_MODAL_VISIBILITY: {
+        case chatPageActionTypes.HIDE_CREATE_CHAT_MODAL_VISIBILITY: {
             return {
                 ...state,
                 createChatModalVisible: false
@@ -62,6 +62,18 @@ export default function chat(state = {}, action) {
                 }
             };
         }
+        case chatPageActionTypes.SHOW_USER_PHOTO_MODAL_VISIBILITY: {
+            return {
+                ...state,
+                userPhotoModalVisible: true
+            };
+        }
+        case chatPageActionTypes.HIDE_USER_PHOTO_MODAL_VISIBILITY: {
+            return {
+                ...state,
+                userPhotoModalVisible: false
+            };
+        };
         default:
             return state;
 

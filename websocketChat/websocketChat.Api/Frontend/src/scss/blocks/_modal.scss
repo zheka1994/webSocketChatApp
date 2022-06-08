@@ -7,6 +7,31 @@
         align-items: center;
     }
 
+    &_closable {
+        &::before, &::after {
+            display: block;
+            position: absolute;
+            top: 16px;
+            right: 0;
+            content: "";
+            width: 32px;
+            height: 3px;
+            background: $black;
+        }
+
+        &:hover::before, &:hover::after {
+            cursor: pointer;
+        }
+
+        &::before {
+            transform: rotate(45deg);
+        }
+
+        &::after {
+            transform: rotate(-45deg);
+        }
+    }
+
     position: fixed;
     top: 0;
     width: 100%;
@@ -17,8 +42,11 @@
     &__content {
         background: $white;
         padding: 20px;
-        min-width: 278px;
         border-radius: 10px;
+
+        &_no-padding {
+            padding: 0;
+        }
     }
 
     &__list {

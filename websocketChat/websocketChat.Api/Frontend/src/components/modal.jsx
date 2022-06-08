@@ -2,10 +2,17 @@
 import classNames from 'classnames';
 
 export default function Modal(props) {
-    const classes = classNames({
+    const modalClasses = classNames({
         "modal": true,
-        "modal_visible": props.visible
+        "modal_visible": props.visible,
+        "modal_closable": props.closable
     });
+
+    const modalContentClasses = classNames({
+        "modal__content": true,
+        "modal__content_no-padding": props.noPadding
+    });
+
     const modalContentRef = useRef(null);
 
     const onClick = useCallback((event) => {
@@ -15,9 +22,9 @@ export default function Modal(props) {
     }, []);
 
     return (
-        <div className={classes} onClick={onClick}>
+        <div className={modalClasses} onClick={onClick}>
             <div
-                className="modal__content"
+                className={modalContentClasses}
                 ref={modalContentRef}>
                 {props.children}
             </div>

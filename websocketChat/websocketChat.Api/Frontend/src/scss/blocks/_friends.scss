@@ -61,4 +61,29 @@
             }
         }
     }
+
+    &-text {
+        display: flex;
+        align-items: center;
+
+        &__logo {
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 1.5;
+            @include setAlpha(background, $violet, 0.4);
+            color: $white;
+        }
+
+        &__desc {
+            display: inline-block;
+            margin-left: 10px;
+
+            &:hover {
+                color: $white;
+                cursor: pointer;
+            }
+        }
+    }
 }

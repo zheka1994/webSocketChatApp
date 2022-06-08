@@ -4,7 +4,7 @@ import Icons from '../../../img/svg/icons-sprite.svg';
 import { getUserNameAbbreviation } from '../business/userNameBusiness';
 
 export default function UserProfile(props) {
-    const { user, setAvatarFile, uploadAvatar } = props;
+    const { user, setAvatarFile, uploadAvatar, showUserPhotoModalVisibility } = props;
 
     function onChangeAvatar(event) {
         const file = event.target.files[0];
@@ -16,7 +16,10 @@ export default function UserProfile(props) {
         if (user?.avatarUri) {
             return (
                 <figure>
-                    <img src={user?.avatarUri} alt="friend" className="current-friend__avatar" />
+                    <img
+                        src={user?.avatarUri}
+                        alt="my avatar"
+                        className="current-friend__avatar" onClick={showUserPhotoModalVisibility} />
                     <figcaption>
                         <div className="current-friend__name">
                             {user?.name ?? ""}
