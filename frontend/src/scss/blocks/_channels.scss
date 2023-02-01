@@ -1,0 +1,61 @@
+﻿.channels {
+    margin-top: 20px;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__title {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 14px;
+    }
+
+    &__count {
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 14px;
+    }
+
+    &__list {
+        &-item {
+            list-style-type: none;
+            position: relative;
+            border-radius: 5px;
+
+            &_online:before, &_offline:before {
+                content: '';
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                position: absolute;
+                top: 50%;
+                left: -15px;
+                transform: translateY(-50%);
+            }
+
+            &_online::before {
+                background: $online-color;
+            }
+
+            &_offline::before {
+                background: $offline-color;
+            }
+
+            &:first-child {
+                margin-top: 20px;
+            }
+
+            padding: 5px 5px 5px 5px;
+
+            &:hover {
+                cursor: pointer;
+                background-color: rgb(142, 138, 138);
+                color: $white;
+            }
+        }
+    }
+}

@@ -1,0 +1,89 @@
+﻿.modal {
+    display: none;
+
+    &_visible {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &_closable {
+        &::before, &::after {
+            display: block;
+            position: absolute;
+            top: 16px;
+            right: 0;
+            content: "";
+            width: 32px;
+            height: 3px;
+            background: $black;
+        }
+
+        &:hover::before, &:hover::after {
+            cursor: pointer;
+        }
+
+        &::before {
+            transform: rotate(45deg);
+        }
+
+        &::after {
+            transform: rotate(-45deg);
+        }
+    }
+
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 3;
+
+    &__content {
+        background: $white;
+        padding: 20px;
+        border-radius: 10px;
+
+        &_no-padding {
+            padding: 0;
+        }
+    }
+
+    &__list {
+        height: 250px;
+    }
+
+    &__form-field + &__form-field {
+        margin-top: 10px;
+    }
+
+    &__label + .input {
+        margin-top: 5px;
+    }
+
+    &__buttons {
+        margin-top: 15px;
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+    &__button {
+        border: 0;
+        background-color: transparent;
+        padding: 10px;
+        border-radius: 5px;
+
+        &:hover {
+            @include setAlpha(background, $violet, 0.4);
+            cursor: pointer;
+        }
+    }
+
+    &__button + &__button {
+        margin-right: 10px;
+    }
+
+    .avatar__caption:hover {
+        color: $black;
+    }
+}

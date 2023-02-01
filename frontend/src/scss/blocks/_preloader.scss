@@ -1,0 +1,69 @@
+.preloader {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(#1e1e20, #25272A);
+
+    &__container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    &__wrap {
+        border: 2px solid transparent;
+        width: 50px;
+        height: 50px;
+        margin: 0 auto;
+        animation-duration: 2s;
+        animation-name: rotateinf;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        animation-direction: normal;
+    }
+
+    &__title {
+        text-align: center;
+        margin-top: 10px;
+        color: $white;
+    }
+
+
+    &__one, &__two, &__three, &__four {
+        width: 15px;
+        height: 15px;
+        @include setAlpha(background, $violet, 0.8);
+        border-radius: 50%;
+        position: absolute;
+    }
+
+    &__one {
+        top: 0%;
+    }
+
+    &__two {
+        bottom: 0;
+    }
+
+    &__three {
+        right: 0;
+    }
+
+    &__four {
+        right: 0;
+        bottom: 0;
+    }
+}
+
+@keyframes rotateinf {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
