@@ -1,0 +1,16 @@
+# step 1 - build and publish
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+WORKDIR /app
+
+# restore packages and publish
+COPY . .
+RUN dotnet restore
+RUN dotnet publish -c Release -o out
+
+# step 2 - copy from publish directory and start command for container
+FROM mcr.microsoft.com/dotnet/sdk:5.0
+WORKDIR /app
+
+COPY --from=build /app/out .
+CMD ["dotnet", "websocketChat.Api.dll"]
+

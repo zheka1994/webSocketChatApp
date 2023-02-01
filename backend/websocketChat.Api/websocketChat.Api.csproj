@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="EFCore.NamingConventions" Version="5.0.2" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.15" />
+      <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.15" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.15">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.15" />
+      <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="5.0.1" />
+      <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\websocketChat.Data\websocketChat.Data.csproj" />
+      <ProjectReference Include="..\websocketChat.UserService\websocketChat.UserService.csproj" />
+      <ProjectReference Include="..\websocketChat.WebsocketService\websocketChat.WebsocketService.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Update="appsettings.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Remove="Static\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Static\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Static\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Static\**" />
+    </ItemGroup>
+
+    <ProjectExtensions><VisualStudio><UserProperties frontend_4package_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+</Project>
