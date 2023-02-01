@@ -21,7 +21,6 @@ namespace websocketChat.Api
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseWebRoot("Static");
                 });
     }
 }

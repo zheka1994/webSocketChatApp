@@ -68,7 +68,8 @@ const buildConfig = {
         historyApiFallback: true,
         compress: true,
         port: 9000,
-        hot: true
+        hot: true,
+        allowedHosts: "all"
     },
     plugins: [
         new webpack.DefinePlugin({

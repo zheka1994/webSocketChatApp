@@ -26,6 +26,7 @@ namespace websocketChat.Api
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             string envName = environment.EnvironmentName;
+            Console.WriteLine($"Environment {envName}");
             string fileName = string.IsNullOrEmpty(envName)
                 ? "appsettings.json"
                 : $"appsettings.{envName}.json";
@@ -34,20 +35,18 @@ namespace websocketChat.Api
             _configuration = builder.Build();
         }
         
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             string dbConnectionString = _configuration
                 .GetSection("AppSettings")
                 ?.GetSection("ConnectionStrings")
                 ?.GetSection("Db")
-                ?.Value ?? "";
+                ?.Value ?? EnvironmentExtensions.GetDbConnectionString() ?? "";
             string redisConnectionString = _configuration
                 .GetSection("AppSettings")
                 ?.GetSection("ConnectionStrings")
                 ?.GetSection("Redis")
-                ?.Value ?? "";
+                ?.Value ?? EnvironmentExtensions.GetRedisConnectionString() ?? "";
             services.AddOptions();
             services.Configure<JwtOptions>(options =>
             {
@@ -89,8 +88,7 @@ namespace websocketChat.Api
             });
             services.AddAppServices();
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
