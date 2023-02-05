@@ -69,7 +69,7 @@ const buildConfig = {
         compress: true,
         port: 9000,
         hot: true,
-        allowedHosts: "all"
+        allowedHosts: "all",
     },
     plugins: [
         new webpack.DefinePlugin({

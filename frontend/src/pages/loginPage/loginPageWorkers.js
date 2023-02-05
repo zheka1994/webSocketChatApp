@@ -14,7 +14,7 @@ export function* authUserWorker() {
 export function* registerUserWorker() {
     const {login} = yield select();
     const response = yield call(registerUser, login);
-    saveToLocalStorage('TOKEN', reponse.token);
+    saveToLocalStorage('TOKEN', response.token);
 }
 
 async function authUser(login) {

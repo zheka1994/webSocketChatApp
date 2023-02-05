@@ -2,7 +2,7 @@ import Api from './api';
 
 export default class ApiMethods {
     constructor() {
-        this.apiEndpoint = `${window.location.protocol}//${window.location.host}/api/v1`;
+        this.apiEndpoint = `/api/v1`;
         this.api = new Api({
             apiEndpoint: this.apiEndpoint
         });
