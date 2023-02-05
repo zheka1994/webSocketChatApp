@@ -15,7 +15,7 @@ namespace websocketChat.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Database=chat-db;Username=chat-api;Password=qwerty123");
+            optionsBuilder.UseNpgsql("Host=postgres;Database=chat-db;Username=postgres;Password=postres_password");
         }
 
         // For service

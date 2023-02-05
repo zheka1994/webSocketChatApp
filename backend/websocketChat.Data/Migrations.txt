@@ -1,5 +1,0 @@
-I use docker image of postgres
-go to folder where webSocketChat.Data project has
-and execute commands to do migrations in database
-dotnet ef --startup-project ../websocketChat.Api migrations add AddChatTables
-dotnet ef --startup-project ../websocketChat.Api database update

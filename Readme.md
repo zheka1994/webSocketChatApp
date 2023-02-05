@@ -8,3 +8,10 @@ docker run -p 5001:5000 --env ASPNETCORE_ENVIRONMENT='Development' --env ASPNETC
 ```
 docker-compose -f docker-compose.dev.yaml up --build
 ```
+Миграция без докера
+```
+Перейти в папку с проектом webSocketChat.Data
+и выполнить следующие команды
+dotnet ef --startup-project ../websocketChat.Api migrations add AddChatTables
+dotnet ef --startup-project ../websocketChat.Api database update
+```
