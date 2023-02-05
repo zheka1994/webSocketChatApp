@@ -25,6 +25,7 @@ services:
       - PG_DATABASE=postgres
       - PG_PASSWORD=postres_password
       - PG_PORT=5432
+      - ASPNETCORE_URLS=http://+:5000
   client:
     build:
       dockerfile: Dockerfile.dev
