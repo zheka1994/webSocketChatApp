@@ -5,16 +5,28 @@ import * as loginPageActions from './loginPageActions';
 import * as validator from './business/formValidation';
 import { saveToLocalStorage } from '../../core/utils/localStorageExtensions';
 
-export function* authUserWorker() {
+export function* authUserWorker(action) {
+    yield(validateAllFields());
     const {login} = yield select();
+    if (validator.hasInvalidField(login)) {
+        return;
+    }
     const response = yield call(authUser, login);
-    saveToLocalStorage('TOKEN', reponse.token);
+    saveToLocalStorage('TOKEN', response.token);
+    const navigate = action.data;
+    navigate("/chat");
 }
 
-export function* registerUserWorker() {
+export function* registerUserWorker(action) {
+    yield(validateAllFields());
     const {login} = yield select();
+    if (validator.hasInvalidField(login)) {
+        return;
+    }
     const response = yield call(registerUser, login);
     saveToLocalStorage('TOKEN', response.token);
+    const navigate = action.data;
+    navigate("/chat");
 }
 
 async function authUser(login) {
@@ -150,4 +162,11 @@ export function* validatePasswordWorker() {
         }
     }
     yield put(loginPageActions.setFormValidationResult(validationResult));
+}
+
+function* validateAllFields() {
+    yield(validateNameWorker());
+    yield(validateEmailWorker());
+    yield(validatePhoneNumberWorker());
+    yield(validatePasswordWorker());
 }

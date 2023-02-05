@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import * as loginPageActions from './loginPageActions';
 import { getCurrentRoot } from "../../core/utils/urlExtensions";
@@ -12,15 +13,15 @@ import Icons from "../../img/svg/icons-sprite.svg";
 export default function LoginPage() {
     const login = useSelector(store => store.login);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const activeTabNumber = login?.activeTabNumber ?? 1;
-    console.log(login);
     
     function onRegisterButtonClick() {
-        dispatch(loginPageActions.registerUser());
+        dispatch(loginPageActions.registerUser(navigate));
     }
     
     function onAuthButtonClick() {
-        dispatch(loginPageActions.authUser());
+        dispatch(loginPageActions.authUser(navigate));
     }
     
     function onVkOAuthButtonClick() {

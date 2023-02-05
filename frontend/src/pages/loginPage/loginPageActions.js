@@ -35,15 +35,17 @@ export function changePassword(data) {
     };
 }
 
-export function authUser() {
+export function authUser(data) {
     return {
-        type: loginPageActionTypes.AUTH_USER
+        type: loginPageActionTypes.AUTH_USER,
+        data
     };
 }
 
-export function registerUser() {
+export function registerUser(data) {
     return {
-        type: loginPageActionTypes.REGISTER_USER
+        type: loginPageActionTypes.REGISTER_USER,
+        data
     };
 }
 

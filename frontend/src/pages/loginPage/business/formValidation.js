@@ -1,3 +1,5 @@
+import { isEmptyObject } from "../../../core/utils/objectExtensions";
+
 export function validateName(value) {
     return /[A-ZА-ЯЁ]$/ig.test(value);
 }
@@ -20,4 +22,9 @@ export function validatePassword(value) {
         withoutSpecialChars.test(value) &&
         containsLetters.test(value);
     
+}
+
+export function hasInvalidField(login) {
+    const {validationResult} = login;
+    return !isEmptyObject(validationResult);
 }
